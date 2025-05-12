@@ -1,0 +1,6 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Use shadcn when you're building UI. eg. pnpm dlx shadcn@latest add button
