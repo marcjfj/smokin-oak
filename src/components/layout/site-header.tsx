@@ -28,22 +28,22 @@ export function SiteHeader() {
         {/* Desktop Navigation */}
         <ul className="hidden md:flex space-x-4">
           <li>
-            <Link href="/" className={`hover:text-neutral-300 ${goblinOne.className}`}>
+            <Link href="/" className={`hover:text-yellow-300 ${goblinOne.className}`}>
               Home
             </Link>
           </li>
           <li>
-            <Link href="/menu" className={`hover:text-neutral-300 ${goblinOne.className}`}>
+            <Link href="/menu" className={`hover:text-yellow-300 ${goblinOne.className}`}>
               Menu
             </Link>
           </li>
           <li>
-            <Link href="/about" className={`hover:text-neutral-300 ${goblinOne.className}`}>
+            <Link href="/about" className={`hover:text-yellow-300 ${goblinOne.className}`}>
               About Us
             </Link>
           </li>
           <li>
-            <Link href="/contact" className={`hover:text-neutral-300 ${goblinOne.className}`}>
+            <Link href="/contact" className={`hover:text-yellow-300 ${goblinOne.className}`}>
               Contact
             </Link>
           </li>
