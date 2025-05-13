@@ -159,7 +159,7 @@ export interface Page {
   id: number;
   title: string;
   slug?: string | null;
-  layout?: ContentBlock[] | null;
+  layout?: (ContentBlock | HeroBlock)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -188,6 +188,33 @@ export interface ContentBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'content';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroBlock".
+ */
+export interface HeroBlock {
+  title?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  image: number | Media;
+  imagePosition?: ('left' | 'right') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'hero';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -294,6 +321,7 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         content?: T | ContentBlockSelect<T>;
+        hero?: T | HeroBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -306,6 +334,18 @@ export interface ContentBlockSelect<T extends boolean = true> {
   title?: T;
   content?: T;
   backgroundImage?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroBlock_select".
+ */
+export interface HeroBlockSelect<T extends boolean = true> {
+  title?: T;
+  content?: T;
+  image?: T;
+  imagePosition?: T;
   id?: T;
   blockName?: T;
 }

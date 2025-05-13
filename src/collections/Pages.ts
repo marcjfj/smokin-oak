@@ -39,6 +39,42 @@ const ContentBlock: Block = {
   ],
 }
 
+const HeroBlock: Block = {
+  slug: 'hero',
+  interfaceName: 'HeroBlock',
+  fields: [
+    {
+      name: 'title',
+      type: 'text',
+    },
+    {
+      name: 'content',
+      type: 'richText',
+    },
+    {
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
+      required: true,
+    },
+    {
+      name: 'imagePosition',
+      type: 'select',
+      defaultValue: 'right',
+      options: [
+        {
+          label: 'Left',
+          value: 'left',
+        },
+        {
+          label: 'Right',
+          value: 'right',
+        },
+      ],
+    },
+  ],
+}
+
 export const Pages: CollectionConfig = {
   slug: 'pages',
   admin: {
@@ -70,7 +106,7 @@ export const Pages: CollectionConfig = {
       name: 'layout',
       type: 'blocks',
       minRows: 1,
-      blocks: [ContentBlock],
+      blocks: [ContentBlock, HeroBlock],
     },
   ],
 }
