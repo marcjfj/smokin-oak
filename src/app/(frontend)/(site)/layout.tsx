@@ -4,7 +4,7 @@ export default async function SiteLayout(props: { children: React.ReactNode }) {
   const { children } = props
 
   return (
-    <div className="bg-neutral-700 text-neutral-100">
+    <div className="bg-neutral-800 text-neutral-100">
       <SiteHeader />
       <main className="min-h-screen">{children}</main>
       <footer className="bg-neutral-800 text-neutral-100 p-4 text-center">

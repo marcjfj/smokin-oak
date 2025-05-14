@@ -255,10 +255,16 @@ export interface MenuItem {
   price: number;
   image?: (number | null) | Media;
   category: number | Category;
+  /**
+   * Check this box if the item is currently sold out.
+   */
+  isSoldOut?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
 /**
+ * Categories for the menu
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "categories".
  */
@@ -431,6 +437,7 @@ export interface MenuItemsSelect<T extends boolean = true> {
   price?: T;
   image?: T;
   category?: T;
+  isSoldOut?: T;
   updatedAt?: T;
   createdAt?: T;
 }

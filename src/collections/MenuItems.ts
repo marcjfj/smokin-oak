@@ -49,6 +49,15 @@ export const MenuItems: CollectionConfig = {
         // For relationship fields, the UI inherently allows clearing or changing the selection.
       },
     },
+    {
+      name: 'isSoldOut',
+      label: 'Sold Out',
+      type: 'checkbox', // Using checkbox for boolean true/false
+      defaultValue: false,
+      admin: {
+        description: 'Check this box if the item is currently sold out.',
+      },
+    },
     // You could add more fields here, like dietary restrictions (tags), calories, etc.
   ],
 }

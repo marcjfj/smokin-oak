@@ -2,7 +2,14 @@ import React from 'react'
 import Image from 'next/image'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
-import type { Media, MenuItem as PayloadMenuItem, Category } from '@/payload-types'
+import type {
+  Media,
+  MenuItem as PayloadMenuItem,
+  Category as PayloadCategory,
+} from '@/payload-types'
+import { RichText } from '@payloadcms/richtext-lexical/react'
+import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
+import { goblinOne } from '@/lib/fonts'
 
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || ''
 
@@ -13,54 +20,79 @@ interface PopulatedImage extends Omit<Media, 'id'> {
   alt: string
 }
 
+// Define the structure of a category from the 'categories' collection
+interface EnrichedCategory {
+  id: string
+  name: string
+  description?: string | null
+  order: number
+}
+
 // Define the structure of a menu item from the 'menu-items' collection
-interface MenuItem extends Omit<PayloadMenuItem, 'id' | 'image' | 'category'> {
+interface MenuItem extends Omit<PayloadMenuItem, 'id' | 'image' | 'category' | 'description'> {
   id: string
   name: string
   price: number
-  category: string // Category name
-  categoryOrder: number // Added for sorting categories
+  category: EnrichedCategory
   image?: PopulatedImage | null
+  isSoldOut: boolean
+  description?: SerializedEditorState | null
+  updatedAt: string
+  createdAt: string
 }
 
 async function getMenuItems(): Promise<MenuItem[]> {
-  console.log('Attempting to fetch menu items...')
   try {
     const payload = await getPayload({ config })
     const result = await payload.find({
       collection: 'menu-items',
-      depth: 1, // This ensures category is populated
+      depth: 2, // Increased depth to populate category.description if it's a relationship
       limit: 100,
     })
-
-    console.log('Raw menu items from Payload (result.docs):', JSON.stringify(result.docs, null, 2))
 
     const processedItems = result.docs
       .map((doc) => {
         const image = doc.image as unknown as PopulatedImage | null | undefined
-        let categoryName = 'Uncategorized'
-        let categoryOrderValue = Infinity // Default order (last)
 
-        if (doc.category && typeof doc.category === 'object' && 'name' in doc.category) {
-          const cat = doc.category as Category // Assert Category type
-          categoryName = String(cat.name || 'Uncategorized')
-          categoryOrderValue = typeof cat.order === 'number' ? cat.order : Infinity
-        } else if (doc.category && typeof doc.category === 'number') {
-          console.warn(
-            `Menu item ${doc.id} has category ID ${doc.category} but expected populated object. Ordering might be affected.`,
-          )
-          categoryName = `Category ${doc.category}`
+        let currentCategory: EnrichedCategory = {
+          id: 'uncategorized',
+          name: 'Uncategorized',
+          order: Infinity,
+          description: null,
         }
 
-        return {
-          ...doc,
+        if (doc.category && typeof doc.category === 'object') {
+          // Assuming doc.category is populated PayloadCategory
+          const cat = doc.category as PayloadCategory
+          currentCategory = {
+            id: String(cat.id),
+            name: String(cat.name || 'Uncategorized'),
+            order: typeof cat.order === 'number' ? cat.order : Infinity,
+            description: cat.description || null, // Add category description
+          }
+        } else if (doc.category && typeof doc.category === 'number') {
+          // This case might be less likely with depth: 2, but good for fallback
+          currentCategory.id = String(doc.category)
+          currentCategory.name = `Category ${doc.category}`
+        }
+
+        const itemDescription = doc.description as unknown as
+          | SerializedEditorState
+          | null
+          | undefined
+
+        const item: MenuItem = {
           id: String(doc.id),
           name: String(doc.name || ''),
           price: Number(doc.price || 0),
-          category: categoryName,
-          categoryOrder: categoryOrderValue, // Assign the order
+          category: currentCategory,
           image: image && image.url && image.alt ? image : null,
-        } as unknown as MenuItem
+          isSoldOut: Boolean(doc.isSoldOut ?? false),
+          description: itemDescription, // Add item description
+          updatedAt: String(doc.updatedAt),
+          createdAt: String(doc.createdAt),
+        }
+        return item
       })
       .filter((item): item is MenuItem => {
         const isValid = Boolean(
@@ -68,21 +100,12 @@ async function getMenuItems(): Promise<MenuItem[]> {
             item.name &&
             typeof item.price === 'number' &&
             item.category &&
-            typeof item.categoryOrder === 'number',
+            item.category.name &&
+            typeof item.category.order === 'number',
         )
-        if (!isValid) {
-          console.log(
-            'Item filtered out (missing name, price, category, or categoryOrder):',
-            JSON.stringify(item, null, 2),
-          )
-        }
         return isValid
       })
 
-    console.log(
-      'Processed and filtered menu items (image optional):',
-      JSON.stringify(processedItems, null, 2),
-    )
     return processedItems
   } catch (error) {
     console.error('Error in getMenuItems function:', error)
@@ -91,32 +114,31 @@ async function getMenuItems(): Promise<MenuItem[]> {
 }
 
 export default async function MenuPage() {
-  console.log('MenuPage component rendering...')
   const menuItems = await getMenuItems()
-  console.log('Menu items received in MenuPage component:', JSON.stringify(menuItems, null, 2))
 
   const groupedMenuItems = menuItems.reduce(
     (acc, item) => {
-      const categoryKey = item.category || 'Uncategorized'
+      const categoryKey = item.category.name || 'Uncategorized'
       if (!acc[categoryKey]) {
-        acc[categoryKey] = []
+        acc[categoryKey] = { items: [], categoryDetails: item.category }
       }
-      acc[categoryKey].push(item)
+      acc[categoryKey].items.push(item)
       return acc
     },
-    {} as Record<string, MenuItem[]>,
+    {} as Record<string, { items: MenuItem[]; categoryDetails: EnrichedCategory }>,
   )
 
-  // Sort categories based on the categoryOrder of their first item
-  const sortedCategorizedItems = Object.entries(groupedMenuItems).sort(([, itemsA], [, itemsB]) => {
-    const orderA = itemsA[0]?.categoryOrder ?? Infinity
-    const orderB = itemsB[0]?.categoryOrder ?? Infinity
+  const sortedCategorizedItems = Object.entries(groupedMenuItems).sort(([, groupA], [, groupB]) => {
+    const orderA = groupA.categoryDetails.order ?? Infinity
+    const orderB = groupB.categoryDetails.order ?? Infinity
     return orderA - orderB
   })
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-goblin-one font-bold text-center mb-12 text-neutral-100">
+      <h1
+        className={`text-4xl font-bold text-center mb-12 text-neutral-100 ${goblinOne.className}`}
+      >
         Our Menu
       </h1>
       {menuItems.length === 0 ? (
@@ -125,12 +147,15 @@ export default async function MenuPage() {
         </p>
       ) : (
         <div className="max-w-3xl mx-auto">
-          {sortedCategorizedItems.map(([category, items]) => (
-            <section key={category} className="mb-12">
-              <h2 className="text-3xl font-goblin-one font-semibold text-yellow-500 mb-6 border-b-2 border-yellow-500 pb-2">
-                {category}
+          {sortedCategorizedItems.map(([, group]) => (
+            <section key={group.categoryDetails.id} className="mb-12">
+              <h2 className={`text-3xl font-semibold text-yellow-500 mb-2 ${goblinOne.className}`}>
+                {group.categoryDetails.name}
               </h2>
-              {items.map((item) => (
+              {group.categoryDetails.description && (
+                <p className="text-yellow-500 mb-6 italic">{group.categoryDetails.description}</p>
+              )}
+              {group.items.map((item) => (
                 <div
                   key={item.id}
                   className="flex items-start py-6 border-b border-neutral-700 last:border-b-0"
@@ -149,16 +174,34 @@ export default async function MenuPage() {
                     <div className="w-24 sm:w-32 mr-6 flex-shrink-0"></div>
                   )}
                   <div className="flex-grow">
-                    <div className="flex justify-between items-baseline">
-                      <h3 className="text-xl font-semibold text-neutral-100" title={item.name}>
-                        {item.name}
-                      </h3>
+                    <div className="flex justify-between items-baseline mb-1">
+                      {' '}
+                      {/* Name and Price Row */}
+                      <div className="flex items-baseline">
+                        <h3
+                          className="text-xl font-semibold text-neutral-100 mr-2"
+                          title={item.name}
+                        >
+                          {item.name}
+                        </h3>
+                        {item.isSoldOut && (
+                          <span className="text-base text-red-500 font-semibold whitespace-nowrap">
+                            Currently Sold Out
+                          </span>
+                        )}
+                      </div>
                       {typeof item.price === 'number' && (
                         <p className="text-lg text-neutral-200 font-medium ml-4 whitespace-nowrap">
                           ${(item.price / 100).toFixed(2)}
                         </p>
                       )}
                     </div>
+                    {/* Item Description */}
+                    {item.description && (
+                      <div className="text-sm prose prose-sm prose-invert max-w-none">
+                        <RichText data={item.description} />
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
