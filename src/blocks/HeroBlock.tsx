@@ -32,7 +32,7 @@ const HeroBlock: React.FC<HeroBlockProps> = ({
   const imageUrl = typeof image === 'object' && image?.url ? image.url : null
 
   const contentSection = (
-    <div className="flex-1 p-8 md:p-12">
+    <div className="w-full p-8 md:p-12 md:flex-1">
       {title && (
         <h2
           className={`text-2xl md:text-4xl font-bold mb-6 text-neutral-100 text-pretty md:text-balance ${goblinOne.className}`}
@@ -66,7 +66,7 @@ const HeroBlock: React.FC<HeroBlockProps> = ({
   )
 
   const imageSection = imageUrl && (
-    <div className="flex-1 relative min-h-[400px] md:min-h-[600px]">
+    <div className="w-full relative min-h-[400px] md:min-h-[600px] md:flex-1">
       <Image
         src={imageUrl}
         alt={title || 'Hero image'}
@@ -80,18 +80,11 @@ const HeroBlock: React.FC<HeroBlockProps> = ({
 
   return (
     <section className=" bg-neutral-800">
-      <div className="container mx-auto md:flex md:flex-row items-center">
-        {imagePosition === 'left' ? (
-          <>
-            {imageSection}
-            {contentSection}
-          </>
-        ) : (
-          <>
-            {contentSection}
-            {imageSection}
-          </>
-        )}
+      <div
+        className={`container mx-auto flex flex-col items-center ${imagePosition === 'left' ? 'md:flex-row-reverse' : 'md:flex-row'}`}
+      >
+        {contentSection}
+        {imageSection}
       </div>
     </section>
   )
