@@ -24,7 +24,7 @@ const HeroBlock: React.FC<HeroBlockProps> = ({
     <div className="flex-1 p-8 md:p-12">
       {title && (
         <h2
-          className={`text-2xl md:text-4xl font-bold mb-6 text-neutral-800 text-pretty md:text-balance ${goblinOne.className}`}
+          className={`text-2xl md:text-4xl font-bold mb-6 text-neutral-100 text-pretty md:text-balance ${goblinOne.className}`}
         >
           {title}
         </h2>
@@ -32,7 +32,7 @@ const HeroBlock: React.FC<HeroBlockProps> = ({
       {content && (
         <RichText
           data={content}
-          className="prose lg:prose-xl text-neutral-600 prose-strong:text-yellow-600"
+          className="prose lg:prose-xl text-neutral-200 prose-strong:text-yellow-400"
         />
       )}
     </div>
@@ -44,7 +44,7 @@ const HeroBlock: React.FC<HeroBlockProps> = ({
         src={imageUrl}
         alt={title || 'Hero image'}
         fill
-        className="object-cover"
+        className="object-contain drop-shadow-md"
         sizes="(max-width: 768px) 100vw, 50vw"
         priority
       />
@@ -52,18 +52,20 @@ const HeroBlock: React.FC<HeroBlockProps> = ({
   )
 
   return (
-    <section className="md:flex md:flex-row items-center bg-neutral-200">
-      {imagePosition === 'left' ? (
-        <>
-          {imageSection}
-          {contentSection}
-        </>
-      ) : (
-        <>
-          {contentSection}
-          {imageSection}
-        </>
-      )}
+    <section className=" bg-neutral-800">
+      <div className="container mx-auto md:flex md:flex-row items-center">
+        {imagePosition === 'left' ? (
+          <>
+            {imageSection}
+            {contentSection}
+          </>
+        ) : (
+          <>
+            {contentSection}
+            {imageSection}
+          </>
+        )}
+      </div>
     </section>
   )
 }

@@ -11,14 +11,14 @@ import { goblinOne } from '@/lib/fonts'
 
 export function SiteHeader() {
   return (
-    <header className="bg-neutral-800 text-neutral-100 p-4 z-20 relative border-b border-neutral-500">
+    <header className="bg-neutral-800 text-neutral-100 p-4 z-20 relative">
       <nav className="container mx-auto flex items-center md:justify-between relative">
         <Link
           href="/"
           className="flex items-center space-x-2 text-2xl font-bold md:static absolute left-1/2 md:left-0 transform md:transform-none -translate-x-1/2 md:-translate-x-0"
         >
           <Image
-            src="/smokin-oak-logo.png"
+            src="/smokin-oak-logo-light.png"
             alt="Smokin Oak Logo"
             width={200}
             height={200}
