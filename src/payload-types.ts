@@ -90,8 +90,16 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'social-media': SocialMedia;
+    'business-hours': BusinessHour;
+    status: Status;
+  };
+  globalsSelect: {
+    'social-media': SocialMediaSelect<false> | SocialMediaSelect<true>;
+    'business-hours': BusinessHoursSelect<false> | BusinessHoursSelect<true>;
+    status: StatusSelect<false> | StatusSelect<true>;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -483,6 +491,93 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "social-media".
+ */
+export interface SocialMedia {
+  id: number;
+  links?:
+    | {
+        platform: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "business-hours".
+ */
+export interface BusinessHour {
+  id: number;
+  schedule?:
+    | {
+        day: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
+        /**
+         * e.g., 9:00 AM - 5:00 PM or Closed
+         */
+        timeRange: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "status".
+ */
+export interface Status {
+  id: number;
+  currentStatus: 'open' | 'sold-out' | 'closed-unscheduled';
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "social-media_select".
+ */
+export interface SocialMediaSelect<T extends boolean = true> {
+  links?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "business-hours_select".
+ */
+export interface BusinessHoursSelect<T extends boolean = true> {
+  schedule?:
+    | T
+    | {
+        day?: T;
+        timeRange?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "status_select".
+ */
+export interface StatusSelect<T extends boolean = true> {
+  currentStatus?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
