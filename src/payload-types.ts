@@ -212,6 +212,13 @@ export interface HeroBlock {
   } | null;
   image: number | Media;
   imagePosition?: ('left' | 'right') | null;
+  ctas?:
+    | {
+        label: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'hero';
@@ -346,6 +353,13 @@ export interface HeroBlockSelect<T extends boolean = true> {
   content?: T;
   image?: T;
   imagePosition?: T;
+  ctas?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }

@@ -29,6 +29,7 @@ type AppHeroBlock = HeroBlockPayload extends infer T
       content?: SerializedEditorState | null | undefined
       image?: any
       imagePosition?: 'left' | 'right' | undefined
+      ctas?: Array<{ label: string; url: string; id?: string | null }> | null | undefined
     }
 
 // Define a component to render blocks
@@ -51,6 +52,7 @@ const BlockRenderer = ({ block }: { block: BlockType }) => {
           content={heroBlock.content}
           image={heroBlock.image}
           imagePosition={heroBlock.imagePosition || 'right'}
+          ctas={heroBlock.ctas}
         />
       )
     default:

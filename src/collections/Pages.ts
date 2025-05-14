@@ -72,6 +72,24 @@ const HeroBlock: Block = {
         },
       ],
     },
+    {
+      name: 'ctas',
+      label: 'Call to Actions',
+      type: 'array',
+      fields: [
+        {
+          name: 'label',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'url',
+          type: 'text',
+          label: 'URL',
+          required: true,
+        },
+      ],
+    },
   ],
 }
 

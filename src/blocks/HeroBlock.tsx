@@ -4,12 +4,22 @@ import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical
 import type { Media } from '@/payload-types'
 import { goblinOne } from '@/lib/fonts'
 import Image from 'next/image'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
+
+interface Cta {
+  label: string
+  url: string
+  id?: string | null | undefined
+}
 
 interface HeroBlockProps {
   title?: string | null | undefined
   content?: SerializedEditorState | null | undefined
   image?: Media | string | number | null | undefined
   imagePosition?: 'left' | 'right'
+  ctas?: Cta[] | null | undefined
 }
 
 const HeroBlock: React.FC<HeroBlockProps> = ({
@@ -17,6 +27,7 @@ const HeroBlock: React.FC<HeroBlockProps> = ({
   content,
   image,
   imagePosition = 'right',
+  ctas,
 }) => {
   const imageUrl = typeof image === 'object' && image?.url ? image.url : null
 
@@ -34,6 +45,22 @@ const HeroBlock: React.FC<HeroBlockProps> = ({
           data={content}
           className="prose lg:prose-xl text-neutral-200 prose-strong:text-yellow-400"
         />
+      )}
+      {ctas && ctas.length > 0 && (
+        <div className="mt-8 flex flex-wrap gap-4">
+          {ctas.map((cta) => (
+            <Button
+              key={cta.id || cta.label}
+              asChild
+              className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-neutral-800 hover:from-yellow-500 hover:to-yellow-600 font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-150 ease-in-out"
+            >
+              <Link href={cta.url} className="flex items-center" prefetch={true}>
+                {cta.label}
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+          ))}
+        </div>
       )}
     </div>
   )
