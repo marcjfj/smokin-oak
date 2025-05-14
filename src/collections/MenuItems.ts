@@ -1,48 +1,54 @@
-import { CollectionConfig, CollectionSlug } from 'payload'
+import type { CollectionConfig } from 'payload'
 
-const MenuItems: CollectionConfig = {
+export const MenuItems: CollectionConfig = {
   slug: 'menu-items',
   admin: {
-    useAsTitle: 'title',
-    defaultColumns: ['title', 'category', 'price', 'soldOut'],
+    useAsTitle: 'name',
+    defaultColumns: ['name', 'price', 'category'],
   },
   access: {
-    read: () => true,
+    read: () => true, // Allow public read access
   },
   fields: [
     {
-      name: 'title',
+      name: 'name',
+      label: 'Name',
       type: 'text',
       required: true,
     },
     {
-      name: 'category',
-      type: 'relationship',
-      relationTo: 'categories' as CollectionSlug,
-      required: true,
-      hasMany: false,
-    },
-    {
       name: 'description',
-      type: 'textarea',
-      required: true,
+      label: 'Description',
+      type: 'richText',
     },
     {
       name: 'price',
+      label: 'Price',
       type: 'number',
       required: true,
-      min: 0,
       admin: {
-        step: 0.01,
+        description: 'Enter price in cents (e.g., 1000 for $10.00)',
       },
     },
     {
-      name: 'soldOut',
-      type: 'checkbox',
-      label: 'Sold Out',
-      defaultValue: false,
+      name: 'image',
+      label: 'Image',
+      type: 'upload',
+      relationTo: 'media', // Relates to your existing Media collection
+      required: false,
     },
+    {
+      name: 'category',
+      label: 'Category',
+      type: 'relationship',
+      relationTo: 'categories', // Link to the Categories collection
+      required: true,
+      hasMany: false, // A menu item belongs to one category
+      admin: {
+        // isClearable is not directly applicable here in the same way as select
+        // For relationship fields, the UI inherently allows clearing or changing the selection.
+      },
+    },
+    // You could add more fields here, like dietary restrictions (tags), calories, etc.
   ],
 }
-
-export default MenuItems

@@ -11,7 +11,7 @@ import { goblinOne } from '@/lib/fonts'
 
 export function SiteHeader() {
   return (
-    <header className="bg-neutral-800 text-neutral-100 p-4 z-20 relative">
+    <header className="bg-neutral-800 text-neutral-100 p-4 z-20 relative pb-12 md:pb-0">
       <nav className="container mx-auto flex items-center md:justify-between relative">
         <Link
           href="/"
