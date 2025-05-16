@@ -4,12 +4,15 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Menu } from 'lucide-react'
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
+import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { goblinOne } from '@/lib/fonts'
 
 export function SiteHeader() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
   return (
     <header className="bg-neutral-800 text-neutral-100 p-4 z-20 relative pb-12 md:pb-0">
       <nav className="container mx-auto flex items-center md:justify-between relative">
@@ -50,7 +53,7 @@ export function SiteHeader() {
         </ul>
         {/* Mobile Navigation */}
         <div className="md:hidden ml-auto">
-          <Sheet>
+          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">
                 <Menu className="h-10 w-10" />
@@ -67,24 +70,31 @@ export function SiteHeader() {
                 </SheetTitle>
               </SheetHeader>
               <nav className="flex flex-col space-y-4 mt-8 px-4">
-                <Link href="/" className={`hover:text-neutral-300 text-lg ${goblinOne.className}`}>
+                <Link
+                  href="/"
+                  className={`hover:text-neutral-300 text-lg ${goblinOne.className}`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
                   Home
                 </Link>
                 <Link
                   href="/menu"
                   className={`hover:text-neutral-300 text-lg ${goblinOne.className}`}
+                  onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Menu
                 </Link>
                 <Link
                   href="/about"
                   className={`hover:text-neutral-300 text-lg ${goblinOne.className}`}
+                  onClick={() => setIsMobileMenuOpen(false)}
                 >
                   About Us
                 </Link>
                 <Link
                   href="/contact"
                   className={`hover:text-neutral-300 text-lg ${goblinOne.className}`}
+                  onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Contact
                 </Link>

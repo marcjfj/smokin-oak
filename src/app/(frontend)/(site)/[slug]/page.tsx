@@ -10,9 +10,9 @@ import BlockRenderer, { AppContentBlock } from '@/components/BlockRenderer' // I
 
 // Define props type to include params with slug
 type SlugPageProps = {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 export default async function SlugPage({ params }: SlugPageProps) {
