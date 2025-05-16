@@ -13,6 +13,7 @@ import Categories from './collections/Categories'
 import { SocialMedia } from './globals/SocialMedia'
 import { Hours } from './globals/Hours'
 import { Status } from './globals/Status'
+import { ContactInfo } from './globals/ContactInfo'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -25,7 +26,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Pages, MenuItems, Categories],
-  globals: [SocialMedia, Hours, Status],
+  globals: [SocialMedia, Hours, Status, ContactInfo],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

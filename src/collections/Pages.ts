@@ -1,4 +1,5 @@
 import { CollectionConfig, Block, FieldHook } from 'payload'
+import React from 'react'
 
 // Helper function to format a string into a slug
 const formatSlug: FieldHook = async ({ value, data }) => {
@@ -93,6 +94,12 @@ const HeroBlock: Block = {
   ],
 }
 
+const ContactBlockCMS: Block = {
+  slug: 'contact',
+  interfaceName: 'ContactBlock', // This should match the blockType in BlockRenderer.tsx
+  fields: [], // No configurable fields needed for this block
+}
+
 export const Pages: CollectionConfig = {
   slug: 'pages',
   admin: {
@@ -124,7 +131,7 @@ export const Pages: CollectionConfig = {
       name: 'layout',
       type: 'blocks',
       minRows: 1,
-      blocks: [ContentBlock, HeroBlock],
+      blocks: [ContentBlock, HeroBlock, ContactBlockCMS],
     },
   ],
 }

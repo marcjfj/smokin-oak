@@ -94,11 +94,13 @@ export interface Config {
     'social-media': SocialMedia;
     'business-hours': BusinessHour;
     status: Status;
+    'contact-info': ContactInfo;
   };
   globalsSelect: {
     'social-media': SocialMediaSelect<false> | SocialMediaSelect<true>;
     'business-hours': BusinessHoursSelect<false> | BusinessHoursSelect<true>;
     status: StatusSelect<false> | StatusSelect<true>;
+    'contact-info': ContactInfoSelect<false> | ContactInfoSelect<true>;
   };
   locale: null;
   user: User & {
@@ -171,7 +173,7 @@ export interface Page {
   id: number;
   title: string;
   slug?: string | null;
-  layout?: (ContentBlock | HeroBlock)[] | null;
+  layout?: (ContentBlock | HeroBlock | ContactBlock)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -234,6 +236,15 @@ export interface HeroBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'hero';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactBlock".
+ */
+export interface ContactBlock {
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contact';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -401,6 +412,7 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         content?: T | ContentBlockSelect<T>;
         hero?: T | HeroBlockSelect<T>;
+        contact?: T | ContactBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -432,6 +444,14 @@ export interface HeroBlockSelect<T extends boolean = true> {
         url?: T;
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactBlock_select".
+ */
+export interface ContactBlockSelect<T extends boolean = true> {
   id?: T;
   blockName?: T;
 }
@@ -539,6 +559,23 @@ export interface Status {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-info".
+ */
+export interface ContactInfo {
+  id: number;
+  email?: string | null;
+  phone?: string | null;
+  address?: {
+    street?: string | null;
+    city?: string | null;
+    state?: string | null;
+    zipCode?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "social-media_select".
  */
 export interface SocialMediaSelect<T extends boolean = true> {
@@ -575,6 +612,25 @@ export interface BusinessHoursSelect<T extends boolean = true> {
  */
 export interface StatusSelect<T extends boolean = true> {
   currentStatus?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-info_select".
+ */
+export interface ContactInfoSelect<T extends boolean = true> {
+  email?: T;
+  phone?: T;
+  address?:
+    | T
+    | {
+        street?: T;
+        city?: T;
+        state?: T;
+        zipCode?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

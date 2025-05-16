@@ -1,10 +1,12 @@
 import { SiteHeader } from '@/components/layout/site-header'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
+import { goblinOne } from '@/lib/fonts'
 import type {
   SocialMedia as SocialMediaType,
   BusinessHour as HoursType,
   Status as StatusType,
+  ContactInfo as ContactInfoType,
 } from '@/payload-types'
 import Image from 'next/image'
 
@@ -42,6 +44,16 @@ export default async function SiteLayout(props: { children: React.ReactNode }) {
     // Optionally: payload.logger.error('Error fetching site status:', error)
   }
 
+  let contactInfo: ContactInfoType | null = null
+  try {
+    contactInfo = await payload.findGlobal({
+      slug: 'contact-info',
+    })
+  } catch (error) {
+    console.error('Error fetching contact info:', error)
+    // Optionally: payload.logger.error('Error fetching contact info:', error)
+  }
+
   return (
     <div className="bg-neutral-800 text-neutral-100">
       <SiteHeader />
@@ -54,7 +66,7 @@ export default async function SiteLayout(props: { children: React.ReactNode }) {
             height={100}
             className="mr-4 -my-20 relative z-50 filter drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]"
           />
-          <span>We are currently SOLD OUT. See you tomorrow!</span>
+          <span className={goblinOne.className}>We are currently SOLD OUT. See you tomorrow!</span>
         </div>
       )}
       <main className="min-h-screen">{children}</main>
@@ -88,10 +100,36 @@ export default async function SiteLayout(props: { children: React.ReactNode }) {
               )}
             </div>
 
+            {/* Contact Information */}
+            {contactInfo && (
+              <div className="mt-6 md:mt-0 text-center md:text-left md:mr-8">
+                <h3 className={`text-lg font-semibold mb-2 ${goblinOne.className}`}>Contact Us</h3>
+                <ul className="text-sm space-y-1">
+                  {contactInfo.email && (
+                    <li>
+                      <a
+                        href={`mailto:${contactInfo.email}`}
+                        className="hover:text-neutral-100 transition-colors duration-200"
+                      >
+                        {contactInfo.email}
+                      </a>
+                    </li>
+                  )}
+                  {contactInfo.phone && <li>{contactInfo.phone}</li>}
+                  {contactInfo.address && (
+                    <li>
+                      {contactInfo.address.street}, {contactInfo.address.city},{' '}
+                      {contactInfo.address.state} {contactInfo.address.zipCode}
+                    </li>
+                  )}
+                </ul>
+              </div>
+            )}
+
             {/* Right Section: Business Hours */}
             {businessHours && businessHours.schedule && businessHours.schedule.length > 0 && (
               <div className="mt-6 md:mt-0 text-center md:text-right">
-                <h3 className="text-lg font-semibold mb-2">Hours</h3>
+                <h3 className={`text-lg font-semibold mb-2 ${goblinOne.className}`}>Hours</h3>
                 <ul className="text-sm space-y-1 w-full md:w-auto min-w-[200px]">
                   {businessHours.schedule.map(
                     (item: { day: string; timeRange: string }, index: number) => (

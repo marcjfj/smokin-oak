@@ -4,6 +4,7 @@ import { ContentBlock as ContentBlockPayload, HeroBlock as HeroBlockPayload } fr
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import ContentBlock from '../blocks/ContentBlock' // Import the new ContentBlock
 import HeroBlock from '../blocks/HeroBlock'
+import ContactBlock from '../blocks/ContactBlock' // Import the new ContactBlock
 
 // Define a more specific type for our block
 interface BlockType {
@@ -32,6 +33,13 @@ type AppHeroBlock = HeroBlockPayload extends infer T
       ctas?: Array<{ label: string; url: string; id?: string | null }> | null | undefined
     }
 
+// Assume ContactBlockPayload will be available in payload-types after generation
+// If not, you might need to define a fallback type similar to AppContentBlock and AppHeroBlock
+interface AppContactBlock {
+  blockType: 'contact'
+  // Add any specific props for ContactBlock if it had any, currently it does not take props directly other than what BlockType implies
+}
+
 // Define a component to render blocks
 const BlockRenderer = ({ block }: { block: BlockType }) => {
   switch (block.blockType) {
@@ -55,10 +63,13 @@ const BlockRenderer = ({ block }: { block: BlockType }) => {
           ctas={heroBlock.ctas}
         />
       )
+    case 'contact':
+      // No specific props to pass to ContactBlock as it fetches its own data
+      return <ContactBlock />
     default:
       return null
   }
 }
 
 export default BlockRenderer
-export type { BlockType, AppContentBlock, AppHeroBlock }
+export type { BlockType, AppContentBlock, AppHeroBlock, AppContactBlock }

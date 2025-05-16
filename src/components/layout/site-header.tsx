@@ -26,7 +26,7 @@ export function SiteHeader() {
           />
         </Link>
         {/* Desktop Navigation */}
-        <ul className="hidden md:flex space-x-4">
+        <ul className="hidden md:flex space-x-6 mr-8">
           <li>
             <Link href="/" className={`hover:text-yellow-300 ${goblinOne.className}`}>
               Home
