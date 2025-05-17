@@ -11,10 +11,10 @@ import BlockRenderer, { AppContentBlock } from '@/components/BlockRenderer' // I
 
 // Define props type to include params with slug
 type SlugPageProps = {
-  params: {
+  params: Promise<{
     // Updated: params is an object, not a Promise here
     slug: string
-  }
+  }>
 }
 
 // Define props for generateMetadata
@@ -64,7 +64,7 @@ export async function generateMetadata(
 
 export default async function SlugPage({ params }: SlugPageProps) {
   // Updated function signature
-  const { slug } = params // Destructure slug from params (no await needed here)
+  const { slug } = await params // Destructure slug from params (no await needed here)
   const headers = await getHeaders()
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
