@@ -481,7 +481,6 @@ export default function InteractiveDigitalMenu({ initialMenuItems }: Interactive
       return orderA - orderB
     })
 
-    let currentColumnIndex = 0
     allCategoryEntries.forEach(([key, group]) => {
       if (!seenCategoryKeys.has(key)) {
         let shortestColumn = 0
@@ -652,12 +651,7 @@ export default function InteractiveDigitalMenu({ initialMenuItems }: Interactive
                                       </span>
                                     )}
                                   </div>
-                                  {menuItem.subItems && menuItem.subItems.length > 0 ? (
-                                    <div className="text-right">
-                                      {/* Prices will be shown with sub-items */}
-                                    </div>
-                                  ) : menuItem.price !== null &&
-                                    typeof menuItem.price === 'number' ? (
+                                  {menuItem.price !== null && typeof menuItem.price === 'number' ? (
                                     <p
                                       className={`font-medium ml-[calc(0.75rem*var(--zoom-factor))] whitespace-nowrap text-[clamp(calc(0.875rem*var(--zoom-factor)),calc(1.04vw*var(--zoom-factor)),calc(1.5rem*var(--zoom-factor)))] ${
                                         menuItem.isSoldOut ? 'text-neutral-500' : 'text-neutral-100'
