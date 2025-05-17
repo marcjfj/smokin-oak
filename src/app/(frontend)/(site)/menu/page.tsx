@@ -42,6 +42,7 @@ interface MenuItem extends Omit<PayloadMenuItem, 'id' | 'image' | 'category' | '
     name: string
     price: number
   }> | null
+  order: number
   updatedAt: string
   createdAt: string
 }
@@ -51,8 +52,9 @@ async function getMenuItems(): Promise<MenuItem[]> {
     const payload = await getPayload({ config })
     const result = await payload.find({
       collection: 'menu-items',
-      depth: 2, // Increased depth to populate category.description if it's a relationship
+      depth: 2,
       limit: 100,
+      sort: 'order',
     })
 
     const processedItems = result.docs
@@ -67,16 +69,14 @@ async function getMenuItems(): Promise<MenuItem[]> {
         }
 
         if (doc.category && typeof doc.category === 'object') {
-          // Assuming doc.category is populated PayloadCategory
           const cat = doc.category as PayloadCategory
           currentCategory = {
             id: String(cat.id),
             name: String(cat.name || 'Uncategorized'),
             order: typeof cat.order === 'number' ? cat.order : Infinity,
-            description: cat.description || null, // Add category description
+            description: cat.description || null,
           }
         } else if (doc.category && typeof doc.category === 'number') {
-          // This case might be less likely with depth: 2, but good for fallback
           currentCategory.id = String(doc.category)
           currentCategory.name = `Category ${doc.category}`
         }
@@ -104,19 +104,25 @@ async function getMenuItems(): Promise<MenuItem[]> {
           isSoldOut: Boolean(doc.isSoldOut ?? false),
           description: itemDescription,
           subItems: subItemsProcessed,
+          order: doc.order as number,
           updatedAt: String(doc.updatedAt),
           createdAt: String(doc.createdAt),
         }
         return item
       })
       .filter((item): item is MenuItem => {
+        const hasPriceOrSubItems =
+          (item.price !== null && typeof item.price === 'number') ||
+          (item.subItems && item.subItems.length > 0)
+
         const isValid = Boolean(
           item &&
             item.name &&
-            typeof item.price === 'number' &&
+            hasPriceOrSubItems &&
             item.category &&
             item.category.name &&
-            typeof item.category.order === 'number',
+            typeof item.category.order === 'number' &&
+            typeof item.order === 'number',
         )
         return isValid
       })
@@ -142,6 +148,12 @@ export default async function MenuPage() {
     },
     {} as Record<string, { items: MenuItem[]; categoryDetails: EnrichedCategory }>,
   )
+
+  for (const categoryKey in groupedMenuItems) {
+    if (Object.prototype.hasOwnProperty.call(groupedMenuItems, categoryKey)) {
+      groupedMenuItems[categoryKey].items.sort((a, b) => a.order - b.order)
+    }
+  }
 
   const sortedCategorizedItems = Object.entries(groupedMenuItems).sort(([, groupA], [, groupB]) => {
     const orderA = groupA.categoryDetails.order ?? Infinity

@@ -4,12 +4,23 @@ export const MenuItems: CollectionConfig = {
   slug: 'menu-items',
   admin: {
     useAsTitle: 'name',
-    defaultColumns: ['name', 'price', 'category'],
+    defaultColumns: ['name', 'price', 'category', 'order'],
   },
   access: {
     read: () => true, // Allow public read access
   },
   fields: [
+    {
+      name: 'order',
+      label: 'Order',
+      type: 'number',
+      admin: {
+        description: 'Enter a number to define the sort order. Lower numbers appear first.',
+        step: 1,
+      },
+      required: true,
+      defaultValue: () => 0, // Default to 0, or consider making it dynamic
+    },
     {
       name: 'name',
       label: 'Name',

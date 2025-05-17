@@ -275,6 +275,10 @@ export interface ImageBlock {
  */
 export interface MenuItem {
   id: number;
+  /**
+   * Enter a number to define the sort order. Lower numbers appear first.
+   */
+  order: number;
   name: string;
   description?: {
     root: {
@@ -549,6 +553,7 @@ export interface ImageBlockSelect<T extends boolean = true> {
  * via the `definition` "menu-items_select".
  */
 export interface MenuItemsSelect<T extends boolean = true> {
+  order?: T;
   name?: T;
   description?: T;
   price?: T;
