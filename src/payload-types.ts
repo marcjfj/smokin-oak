@@ -72,6 +72,7 @@ export interface Config {
     pages: Page;
     'menu-items': MenuItem;
     categories: Category;
+    events: Event;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -83,6 +84,7 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     'menu-items': MenuItemsSelect<false> | MenuItemsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    events: EventsSelect<false> | EventsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -173,7 +175,7 @@ export interface Page {
   id: number;
   title: string;
   slug?: string | null;
-  layout?: (ContentBlock | HeroBlock | ContactBlock)[] | null;
+  layout?: (ContentBlock | HeroBlock | ContactBlock | EventsBlock)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -248,6 +250,16 @@ export interface ContactBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EventsBlock".
+ */
+export interface EventsBlock {
+  title?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'events';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "menu-items".
  */
 export interface MenuItem {
@@ -300,6 +312,34 @@ export interface Category {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: number;
+  title: string;
+  date: string;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  location?: string | null;
+  image?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -324,6 +364,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'categories';
         value: number | Category;
+      } | null)
+    | ({
+        relationTo: 'events';
+        value: number | Event;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -413,6 +457,7 @@ export interface PagesSelect<T extends boolean = true> {
         content?: T | ContentBlockSelect<T>;
         hero?: T | HeroBlockSelect<T>;
         contact?: T | ContactBlockSelect<T>;
+        events?: T | EventsBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -457,6 +502,15 @@ export interface ContactBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EventsBlock_select".
+ */
+export interface EventsBlockSelect<T extends boolean = true> {
+  title?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "menu-items_select".
  */
 export interface MenuItemsSelect<T extends boolean = true> {
@@ -477,6 +531,19 @@ export interface CategoriesSelect<T extends boolean = true> {
   name?: T;
   description?: T;
   order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events_select".
+ */
+export interface EventsSelect<T extends boolean = true> {
+  title?: T;
+  date?: T;
+  description?: T;
+  location?: T;
+  image?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -50,6 +50,11 @@ export function SiteHeader() {
               Contact
             </Link>
           </li>
+          <li>
+            <Link href="/events" className={`hover:text-yellow-300 ${goblinOne.className}`}>
+              Events
+            </Link>
+          </li>
         </ul>
         {/* Mobile Navigation */}
         <div className="md:hidden ml-auto">
@@ -97,6 +102,13 @@ export function SiteHeader() {
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Contact
+                </Link>
+                <Link
+                  href="/events"
+                  className={`hover:text-neutral-300 text-lg ${goblinOne.className}`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Events
                 </Link>
               </nav>
             </SheetContent>

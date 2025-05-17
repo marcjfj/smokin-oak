@@ -3,7 +3,7 @@ import './styles.css'
 import { geistSans } from '@/lib/fonts'
 
 export const metadata = {
-  description: "Smokin' Oak BBQ",
+  description: "Smokin' Oak BBQ in Mariposa, CA",
   title: "Smokin' Oak BBQ",
 }
 

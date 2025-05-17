@@ -10,6 +10,7 @@ import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { MenuItems } from './collections/MenuItems'
 import Categories from './collections/Categories'
+import { Events } from './collections/Events'
 import { SocialMedia } from './globals/SocialMedia'
 import { Hours } from './globals/Hours'
 import { Status } from './globals/Status'
@@ -25,7 +26,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Pages, MenuItems, Categories],
+  collections: [Users, Media, Pages, MenuItems, Categories, Events],
   globals: [SocialMedia, Hours, Status, ContactInfo],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

@@ -100,6 +100,19 @@ const ContactBlockCMS: Block = {
   fields: [], // No configurable fields needed for this block
 }
 
+const EventsBlockCMS: Block = {
+  slug: 'events', // This will be the blockType
+  interfaceName: 'EventsBlock', // For payload-types.ts
+  fields: [
+    {
+      name: 'title',
+      type: 'text',
+      label: 'Block Title (e.g., Upcoming Events)',
+    },
+    // We might add options later, e.g., number of events to show
+  ],
+}
+
 export const Pages: CollectionConfig = {
   slug: 'pages',
   admin: {
@@ -131,7 +144,7 @@ export const Pages: CollectionConfig = {
       name: 'layout',
       type: 'blocks',
       minRows: 1,
-      blocks: [ContentBlock, HeroBlock, ContactBlockCMS],
+      blocks: [ContentBlock, HeroBlock, ContactBlockCMS, EventsBlockCMS],
     },
   ],
 }
