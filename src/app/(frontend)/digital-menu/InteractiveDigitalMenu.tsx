@@ -451,7 +451,7 @@ export default function InteractiveDigitalMenu({ initialMenuItems }: Interactive
     const allCategoryEntries = Object.entries(groupedMenuItems)
 
     const storedLayoutString = localStorage.getItem(CATEGORY_LAYOUT_STORAGE_KEY) // Use renamed key
-    let newColumns: Array<Array<[string, GroupedItem]>> = Array.from(
+    const newColumns: Array<Array<[string, GroupedItem]>> = Array.from(
       { length: NUM_COLUMNS },
       () => [],
     )
@@ -671,11 +671,11 @@ export default function InteractiveDigitalMenu({ initialMenuItems }: Interactive
                                   </div>
                                 )}
                                 {menuItem.subItems && menuItem.subItems.length > 0 && (
-                                  <div className="mt-[calc(0.375rem*var(--zoom-factor))] [&_>_:not([hidden])~:not([hidden])]:mt-[calc(0.25rem_*_var(--zoom-factor))]">
+                                  <div className="mt-[calc(0.375rem*var(--zoom-factor))] [&_>_:not([hidden])~:not([hidden])]:mt-[calc(0.25rem_*_var(--zoom-factor))] ml-auto max-w-[calc(300px*var(--zoom-factor))]">
                                     {menuItem.subItems.map((subItem) => (
                                       <div
                                         key={subItem.id || subItem.name}
-                                        className={`flex justify-between items-baseline text-[clamp(calc(0.75rem*var(--zoom-factor)),calc(0.83vw*var(--zoom-factor)),calc(1.125rem*var(--zoom-factor)))]`}
+                                        className={`flex justify-between items-baseline text-[clamp(calc(1.5rem*var(--zoom-factor)),calc(0.83vw*var(--zoom-factor)),calc(1.125rem*var(--zoom-factor)))]`}
                                       >
                                         <span
                                           className={
