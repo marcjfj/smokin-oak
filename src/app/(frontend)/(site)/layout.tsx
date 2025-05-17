@@ -73,36 +73,9 @@ export default async function SiteLayout(props: { children: React.ReactNode }) {
       <footer className="bg-gradient-to-b from-neutral-800 to-neutral-900 text-neutral-300 p-6 md:p-8 mt-24 border-t border-neutral-700">
         <div className="container mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center md:items-start text-center md:text-left">
-            <div className="mb-6 md:mb-0 flex flex-col items-center md:items-start">
-              <Image
-                src="/smokin-oak-logo-light.png"
-                alt="Smokin' Oak BBQ Logo"
-                width={150}
-                height={75}
-                className="mb-4"
-              />
-              {socialLinks && socialLinks.links && socialLinks.links.length > 0 && (
-                <div className="flex justify-center md:justify-start space-x-4 mt-2">
-                  {socialLinks.links.map(
-                    (link: { platform: string; url: string }, index: number) => (
-                      <a
-                        key={index}
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-neutral-300 transition-colors duration-200"
-                      >
-                        {link.platform}
-                      </a>
-                    ),
-                  )}
-                </div>
-              )}
-            </div>
-
             {/* Contact Information */}
             {contactInfo && (
-              <div className="mt-6 md:mt-0 text-center md:text-left md:mr-8">
+              <div className="mb-6 md:mb-0 md:mr-8 text-center md:text-left">
                 <h3 className={`text-lg font-semibold mb-2 ${goblinOne.className}`}>Contact Us</h3>
                 <ul className="text-sm space-y-1">
                   {contactInfo.email && (
@@ -125,6 +98,34 @@ export default async function SiteLayout(props: { children: React.ReactNode }) {
                 </ul>
               </div>
             )}
+
+            {/* Logo and Socials - Centered */}
+            <div className="mb-6 md:mb-0 flex flex-col items-center">
+              <Image
+                src="/smokin-oak-logo-light.png"
+                alt="Smokin' Oak BBQ Logo"
+                width={150}
+                height={75}
+                className="mb-4"
+              />
+              {socialLinks && socialLinks.links && socialLinks.links.length > 0 && (
+                <div className="flex justify-center space-x-4 mt-2">
+                  {socialLinks.links.map(
+                    (link: { platform: string; url: string }, index: number) => (
+                      <a
+                        key={index}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-neutral-300 transition-colors duration-200"
+                      >
+                        {link.platform}
+                      </a>
+                    ),
+                  )}
+                </div>
+              )}
+            </div>
 
             {/* Right Section: Business Hours */}
             {businessHours && businessHours.schedule && businessHours.schedule.length > 0 && (
