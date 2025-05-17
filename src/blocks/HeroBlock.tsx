@@ -6,12 +6,13 @@ import { goblinOne } from '@/lib/fonts'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Utensils, MapPin } from 'lucide-react'
 
 interface Cta {
   label: string
   url: string
   id?: string | null | undefined
+  icon?: 'Utensils' | 'MapPin' | '' | null | undefined
 }
 
 interface HeroBlockProps {
@@ -20,6 +21,18 @@ interface HeroBlockProps {
   image?: Media | string | number | null | undefined
   imagePosition?: 'left' | 'right'
   ctas?: Cta[] | null | undefined
+}
+
+// Helper to get the icon component based on name
+const IconComponent = ({ iconName }: { iconName: string }) => {
+  switch (iconName) {
+    case 'Utensils':
+      return <Utensils className="size-6 ml-2" />
+    case 'MapPin':
+      return <MapPin className="size-6 ml-2" />
+    default:
+      return null
+  }
 }
 
 const HeroBlock: React.FC<HeroBlockProps> = ({
@@ -52,11 +65,11 @@ const HeroBlock: React.FC<HeroBlockProps> = ({
             <Button
               key={cta.id || cta.label}
               asChild
-              className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-neutral-800 hover:from-yellow-500 hover:to-yellow-600 font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-150 ease-in-out"
+              className={`bg-yellow-400 hover:bg-yellow-500 shadow-none text-neutral-800 text-2xl font-bold !py-8 !px-8 rounded-none transition-all duration-150 ease-in-out`}
             >
               <Link href={cta.url} className="flex items-center" prefetch={true}>
                 {cta.label}
-                <ArrowRight className="ml-2 h-5 w-5" />
+                {cta.icon && <IconComponent iconName={cta.icon} />}
               </Link>
             </Button>
           ))}

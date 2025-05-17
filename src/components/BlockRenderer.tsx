@@ -5,6 +5,7 @@ import ContentBlock from '../blocks/ContentBlock' // Import the new ContentBlock
 import HeroBlock from '../blocks/HeroBlock'
 import ContactBlock from '../blocks/ContactBlock' // Import the new ContactBlock
 import EventsBlock from '../blocks/EventsBlock' // Import the new EventsBlock
+import ImageBlock from '../blocks/ImageBlock' // Import the new ImageBlock
 
 // Define a more specific type for our block
 interface BlockType {
@@ -47,6 +48,12 @@ interface AppEventsBlock {
   title?: string | null
 }
 
+// Define a type for the new ImageBlock
+interface AppImageBlock {
+  blockType: 'image'
+  image: any // Consider a more specific type if known, e.g., from payload-types
+}
+
 // Define a component to render blocks
 const BlockRenderer = ({ block }: { block: BlockType }) => {
   switch (block.blockType) {
@@ -76,10 +83,20 @@ const BlockRenderer = ({ block }: { block: BlockType }) => {
     case 'events': // Add this case
       const eventsBlock = block as AppEventsBlock
       return <EventsBlock title={eventsBlock.title} />
+    case 'image': // Add this case for ImageBlock
+      const imageBlock = block as AppImageBlock
+      return <ImageBlock image={imageBlock.image} />
     default:
       return null
   }
 }
 
 export default BlockRenderer
-export type { BlockType, AppContentBlock, AppHeroBlock, AppContactBlock, AppEventsBlock }
+export type {
+  BlockType,
+  AppContentBlock,
+  AppHeroBlock,
+  AppContactBlock,
+  AppEventsBlock,
+  AppImageBlock,
+}

@@ -41,7 +41,7 @@ const ContactBlock: React.FC<ContactBlockProps> = async () => {
   }
 
   return (
-    <div className="container mx-auto py-12 px-4">
+    <div className="container mx-auto py-12 px-4 border-yellow-400 border my-20">
       <h1 className={`text-4xl font-bold text-center mb-12 ${goblinOne.className}`}>Contact Us</h1>
 
       <div className="grid md:grid-cols-3 gap-8 mb-12">

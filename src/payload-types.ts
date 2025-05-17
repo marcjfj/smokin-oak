@@ -175,7 +175,7 @@ export interface Page {
   id: number;
   title: string;
   slug?: string | null;
-  layout?: (ContentBlock | HeroBlock | ContactBlock | EventsBlock)[] | null;
+  layout?: (ContentBlock | HeroBlock | ContactBlock | EventsBlock | ImageBlock)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -232,6 +232,7 @@ export interface HeroBlock {
     | {
         label: string;
         url: string;
+        icon?: ('' | 'Utensils' | 'MapPin') | null;
         id?: string | null;
       }[]
     | null;
@@ -260,6 +261,16 @@ export interface EventsBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ImageBlock".
+ */
+export interface ImageBlock {
+  image: number | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'image';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "menu-items".
  */
 export interface MenuItem {
@@ -281,9 +292,22 @@ export interface MenuItem {
     [k: string]: unknown;
   } | null;
   /**
-   * Enter price in cents (e.g., 1000 for $10.00)
+   * Enter price in cents (e.g., 1000 for $10.00). Optional if item has sub-items with prices.
    */
-  price: number;
+  price?: number | null;
+  /**
+   * Add sub-items if this menu item comes in different sizes or variations with different prices (e.g., Half Rack, Full Rack).
+   */
+  subItems?:
+    | {
+        name: string;
+        /**
+         * Enter price in cents (e.g., 1200 for $12.00)
+         */
+        price: number;
+        id?: string | null;
+      }[]
+    | null;
   image?: (number | null) | Media;
   category: number | Category;
   /**
@@ -458,6 +482,7 @@ export interface PagesSelect<T extends boolean = true> {
         hero?: T | HeroBlockSelect<T>;
         contact?: T | ContactBlockSelect<T>;
         events?: T | EventsBlockSelect<T>;
+        image?: T | ImageBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -487,6 +512,7 @@ export interface HeroBlockSelect<T extends boolean = true> {
     | {
         label?: T;
         url?: T;
+        icon?: T;
         id?: T;
       };
   id?: T;
@@ -511,12 +537,28 @@ export interface EventsBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ImageBlock_select".
+ */
+export interface ImageBlockSelect<T extends boolean = true> {
+  image?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "menu-items_select".
  */
 export interface MenuItemsSelect<T extends boolean = true> {
   name?: T;
   description?: T;
   price?: T;
+  subItems?:
+    | T
+    | {
+        name?: T;
+        price?: T;
+        id?: T;
+      };
   image?: T;
   category?: T;
   isSoldOut?: T;

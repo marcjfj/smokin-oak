@@ -89,6 +89,16 @@ const HeroBlock: Block = {
           label: 'URL',
           required: true,
         },
+        {
+          name: 'icon',
+          type: 'select',
+          label: 'Icon',
+          options: [
+            { label: 'None', value: '' },
+            { label: 'Utensils', value: 'Utensils' },
+            { label: 'Map Pin', value: 'MapPin' },
+          ],
+        },
       ],
     },
   ],
@@ -110,6 +120,20 @@ const EventsBlockCMS: Block = {
       label: 'Block Title (e.g., Upcoming Events)',
     },
     // We might add options later, e.g., number of events to show
+  ],
+}
+
+const ImageBlock: Block = {
+  slug: 'image',
+  interfaceName: 'ImageBlock',
+  fields: [
+    {
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
+      required: true,
+      label: 'Image',
+    },
   ],
 }
 
@@ -144,7 +168,7 @@ export const Pages: CollectionConfig = {
       name: 'layout',
       type: 'blocks',
       minRows: 1,
-      blocks: [ContentBlock, HeroBlock, ContactBlockCMS, EventsBlockCMS],
+      blocks: [ContentBlock, HeroBlock, ContactBlockCMS, EventsBlockCMS, ImageBlock],
     },
   ],
 }

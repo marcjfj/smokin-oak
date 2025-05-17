@@ -70,12 +70,12 @@ export default async function SiteLayout(props: { children: React.ReactNode }) {
         </div>
       )}
       <main className="min-h-screen">{children}</main>
-      <footer className="bg-gradient-to-b from-neutral-800 to-neutral-900 text-neutral-300 p-6 md:p-8 mt-24 border-t border-neutral-700">
+      <footer className=" text-neutral-300 p-6 md:p-8 mt-24 border-t border-neutral-700">
         <div className="container mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center md:items-start text-center md:text-left">
             {/* Contact Information */}
             {contactInfo && (
-              <div className="mb-6 md:mb-0 md:mr-8 text-center md:text-left">
+              <div className="mb-6 md:mb-0 md:flex-1 text-center md:text-left">
                 <h3 className={`text-lg font-semibold mb-2 ${goblinOne.className}`}>Contact Us</h3>
                 <ul className="text-sm space-y-1">
                   {contactInfo.email && (
@@ -100,7 +100,7 @@ export default async function SiteLayout(props: { children: React.ReactNode }) {
             )}
 
             {/* Logo and Socials - Centered */}
-            <div className="mb-6 md:mb-0 flex flex-col items-center">
+            <div className="mb-6 md:mb-0 flex flex-col items-center text-center mx-auto">
               <Image
                 src="/smokin-oak-logo-light.png"
                 alt="Smokin' Oak BBQ Logo"
@@ -129,9 +129,9 @@ export default async function SiteLayout(props: { children: React.ReactNode }) {
 
             {/* Right Section: Business Hours */}
             {businessHours && businessHours.schedule && businessHours.schedule.length > 0 && (
-              <div className="mt-6 md:mt-0 text-center md:text-right">
+              <div className="mt-6 md:mt-0 text-center md:text-right md:flex-1 flex flex-col items-end">
                 <h3 className={`text-lg font-semibold mb-2 ${goblinOne.className}`}>Hours</h3>
-                <ul className="text-sm space-y-1 w-full md:w-auto min-w-[200px]">
+                <ul className="text-sm space-y-1 w-full md:w-auto min-w-[200px] max-w-[400px]">
                   {businessHours.schedule.map(
                     (item: { day: string; timeRange: string }, index: number) => (
                       <li key={index} className="flex justify-between items-center">

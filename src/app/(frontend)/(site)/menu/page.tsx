@@ -32,11 +32,16 @@ interface EnrichedCategory {
 interface MenuItem extends Omit<PayloadMenuItem, 'id' | 'image' | 'category' | 'description'> {
   id: string
   name: string
-  price: number
+  price?: number | null
   category: EnrichedCategory
   image?: PopulatedImage | null
   isSoldOut: boolean
   description?: SerializedEditorState | null
+  subItems?: Array<{
+    id?: string | null
+    name: string
+    price: number
+  }> | null
   updatedAt: string
   createdAt: string
 }
@@ -81,14 +86,24 @@ async function getMenuItems(): Promise<MenuItem[]> {
           | null
           | undefined
 
+        const subItemsProcessed =
+          Array.isArray(doc.subItems) && doc.subItems.length > 0
+            ? doc.subItems.map((sub) => ({
+                id: sub.id || null,
+                name: String(sub.name || ''),
+                price: Number(sub.price || 0),
+              }))
+            : null
+
         const item: MenuItem = {
           id: String(doc.id),
           name: String(doc.name || ''),
-          price: Number(doc.price || 0),
+          price: doc.price === null || doc.price === undefined ? null : Number(doc.price),
           category: currentCategory,
           image: image && image.url && image.alt ? image : null,
           isSoldOut: Boolean(doc.isSoldOut ?? false),
-          description: itemDescription, // Add item description
+          description: itemDescription,
+          subItems: subItemsProcessed,
           updatedAt: String(doc.updatedAt),
           createdAt: String(doc.createdAt),
         }
@@ -190,16 +205,37 @@ export default async function MenuPage() {
                           </span>
                         )}
                       </div>
-                      {typeof item.price === 'number' && (
+                      {/* Price Display Logic */}
+                      {item.subItems && item.subItems.length > 0 ? (
+                        <div className="text-right">
+                          {/* Sub-items will be listed below description */}
+                        </div>
+                      ) : item.price !== null && typeof item.price === 'number' ? (
                         <p className="text-lg text-neutral-200 font-medium ml-4 whitespace-nowrap">
                           ${(item.price / 100).toFixed(2)}
                         </p>
-                      )}
+                      ) : null}
                     </div>
                     {/* Item Description */}
                     {item.description && (
-                      <div className="text-sm prose prose-sm prose-invert max-w-none">
+                      <div className="text-sm prose prose-sm prose-invert max-w-none mb-2">
                         <RichText data={item.description} />
+                      </div>
+                    )}
+                    {/* Sub-Items Display */}
+                    {item.subItems && item.subItems.length > 0 && (
+                      <div className="mt-2 space-y-1">
+                        {item.subItems.map((subItem) => (
+                          <div
+                            key={subItem.id || subItem.name}
+                            className="flex justify-between items-baseline text-sm"
+                          >
+                            <span className="text-neutral-300">{subItem.name}</span>
+                            <span className="text-neutral-200 font-medium whitespace-nowrap">
+                              ${(subItem.price / 100).toFixed(2)}
+                            </span>
+                          </div>
+                        ))}
                       </div>
                     )}
                   </div>
