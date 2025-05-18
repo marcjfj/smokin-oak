@@ -111,14 +111,9 @@ async function getMenuItems(): Promise<MenuItem[]> {
         return item
       })
       .filter((item): item is MenuItem => {
-        const hasPriceOrSubItems =
-          (item.price !== null && typeof item.price === 'number') ||
-          (item.subItems && item.subItems.length > 0)
-
         const isValid = Boolean(
           item &&
             item.name &&
-            hasPriceOrSubItems &&
             item.category &&
             item.category.name &&
             typeof item.category.order === 'number' &&
@@ -187,7 +182,7 @@ export default async function MenuPage() {
                   key={item.id}
                   className="flex items-start py-6 border-b border-neutral-700 last:border-b-0"
                 >
-                  {item.image && item.image.url ? (
+                  {/* {item.image && item.image.url ? (
                     <div className="relative w-24 h-24 sm:w-32 sm:h-32 mr-6 flex-shrink-0 rounded overflow-hidden">
                       <Image
                         src={`${SERVER_URL}${item.image.url}`}
@@ -199,7 +194,7 @@ export default async function MenuPage() {
                     </div>
                   ) : (
                     <div className="w-24 sm:w-32 mr-6 flex-shrink-0"></div>
-                  )}
+                  )} */}
                   <div className="flex-grow">
                     <div className="flex justify-between items-baseline mb-1">
                       {' '}
@@ -242,7 +237,7 @@ export default async function MenuPage() {
                             key={subItem.id || subItem.name}
                             className="flex justify-between items-baseline text-sm"
                           >
-                            <span className="text-neutral-300">{subItem.name}</span>
+                            <span className="text-neutral-300 font-bold">{subItem.name}</span>
                             <span className="text-neutral-200 font-medium whitespace-nowrap">
                               ${(subItem.price / 100).toFixed(2)}
                             </span>

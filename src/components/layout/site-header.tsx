@@ -14,7 +14,7 @@ export function SiteHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   return (
-    <header className="bg-neutral-800 text-neutral-100 p-4 z-20 relative pb-12 md:pb-0">
+    <header className="text-neutral-100 p-4 z-20 relative pb-12 md:pb-0">
       <nav className="container mx-auto flex items-center md:justify-between relative">
         <Link
           href="/"

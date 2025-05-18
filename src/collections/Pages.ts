@@ -107,7 +107,14 @@ const HeroBlock: Block = {
 const ContactBlockCMS: Block = {
   slug: 'contact',
   interfaceName: 'ContactBlock', // This should match the blockType in BlockRenderer.tsx
-  fields: [], // No configurable fields needed for this block
+  fields: [
+    {
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Contact Block Image',
+    },
+  ], // No configurable fields needed for this block
 }
 
 const EventsBlockCMS: Block = {

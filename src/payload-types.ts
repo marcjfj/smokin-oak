@@ -245,6 +245,7 @@ export interface HeroBlock {
  * via the `definition` "ContactBlock".
  */
 export interface ContactBlock {
+  image?: (number | null) | Media;
   id?: string | null;
   blockName?: string | null;
   blockType: 'contact';
@@ -527,6 +528,7 @@ export interface HeroBlockSelect<T extends boolean = true> {
  * via the `definition` "ContactBlock_select".
  */
 export interface ContactBlockSelect<T extends boolean = true> {
+  image?: T;
   id?: T;
   blockName?: T;
 }

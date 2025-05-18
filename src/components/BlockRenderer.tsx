@@ -38,6 +38,7 @@ type AppHeroBlock = HeroBlockPayload extends infer T
 // If not, you might need to define a fallback type similar to AppContentBlock and AppHeroBlock
 interface AppContactBlock {
   blockType: 'contact'
+  image?: any // Add the image prop here, consider a more specific type
   // Add any specific props for ContactBlock if it had any, currently it does not take props directly other than what BlockType implies
 }
 
@@ -79,7 +80,8 @@ const BlockRenderer = ({ block }: { block: BlockType }) => {
       )
     case 'contact':
       // No specific props to pass to ContactBlock as it fetches its own data
-      return <ContactBlock />
+      const contactBlock = block as AppContactBlock
+      return <ContactBlock image={contactBlock.image} />
     case 'events': // Add this case
       const eventsBlock = block as AppEventsBlock
       return <EventsBlock title={eventsBlock.title} />
