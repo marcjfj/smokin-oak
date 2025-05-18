@@ -93,14 +93,9 @@ async function getMenuItems(): Promise<MenuItem[]> {
         return item
       })
       .filter((item): item is MenuItem => {
-        const hasPriceOrSubItems =
-          (item.price !== null && typeof item.price === 'number') ||
-          (item.subItems && item.subItems.length > 0)
-
         const isValid = Boolean(
           item &&
             item.name &&
-            hasPriceOrSubItems &&
             item.category &&
             item.category.name &&
             typeof item.category.order === 'number' &&

@@ -111,7 +111,7 @@ const FloatingMenu: React.FC<FloatingMenuProps> = ({
           onValueChange={(value) => onZoomChange(value[0])}
           min={50}
           max={200}
-          step={10}
+          step={1}
           className="w-32 cursor-pointer [&>span:first-child]:h-1.5 [&>span:first-child>span:first-child]:h-1.5 [&>span:first-child>span:first-child]:bg-yellow-500 [&>span:first-child_span_button]:bg-yellow-400 [&>span:first-child_span_button]:w-4 [&>span:first-child_span_button]:h-4 [&>span:first-child_span_button:focus-visible]:ring-yellow-600"
           aria-label="Zoom slider"
         />

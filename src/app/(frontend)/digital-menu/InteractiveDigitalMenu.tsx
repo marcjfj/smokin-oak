@@ -651,15 +651,21 @@ export default function InteractiveDigitalMenu({ initialMenuItems }: Interactive
                                       </span>
                                     )}
                                   </div>
-                                  {menuItem.price !== null && typeof menuItem.price === 'number' ? (
-                                    <p
-                                      className={`font-medium ml-[calc(0.75rem*var(--zoom-factor))] whitespace-nowrap text-[clamp(calc(0.875rem*var(--zoom-factor)),calc(1.04vw*var(--zoom-factor)),calc(1.5rem*var(--zoom-factor)))] ${
-                                        menuItem.isSoldOut ? 'text-neutral-500' : 'text-neutral-100'
-                                      }`}
-                                    >
-                                      ${(menuItem.price / 100).toFixed(2)}
-                                    </p>
-                                  ) : null}
+                                  <p
+                                    className={`font-medium ml-[calc(0.75rem*var(--zoom-factor))] whitespace-nowrap text-[clamp(calc(0.875rem*var(--zoom-factor)),calc(1.04vw*var(--zoom-factor)),calc(1.5rem*var(--zoom-factor)))] ${
+                                      menuItem.isSoldOut
+                                        ? 'text-neutral-500'
+                                        : menuItem.price !== null &&
+                                            typeof menuItem.price === 'number'
+                                          ? 'text-neutral-100'
+                                          : 'text-transparent'
+                                    }`}
+                                  >
+                                    {menuItem.price !== null && typeof menuItem.price === 'number'
+                                      ? `$${(menuItem.price / 100).toFixed(2)}`
+                                      : '\u00A0'}
+                                    {/* Non-breaking space */}
+                                  </p>
                                 </div>
                                 {menuItem.description && (
                                   <div
@@ -671,7 +677,7 @@ export default function InteractiveDigitalMenu({ initialMenuItems }: Interactive
                                   </div>
                                 )}
                                 {menuItem.subItems && menuItem.subItems.length > 0 && (
-                                  <div className="mt-[calc(0.375rem*var(--zoom-factor))] [&_>_:not([hidden])~:not([hidden])]:mt-[calc(0.25rem_*_var(--zoom-factor))] ml-auto max-w-[calc(300px*var(--zoom-factor))]">
+                                  <div className="mt-[calc(0.375rem*var(--zoom-factor))] [&_>_:not([hidden])~:not([hidden])]:mt-[calc(0.25rem_*_var(--zoom-factor))]">
                                     {menuItem.subItems.map((subItem) => (
                                       <div
                                         key={subItem.id || subItem.name}
@@ -680,8 +686,8 @@ export default function InteractiveDigitalMenu({ initialMenuItems }: Interactive
                                         <span
                                           className={
                                             menuItem.isSoldOut
-                                              ? 'text-neutral-500'
-                                              : 'text-neutral-200'
+                                              ? 'text-neutral-500 font-bold'
+                                              : 'text-neutral-200 font-bold'
                                           }
                                         >
                                           {subItem.name}
