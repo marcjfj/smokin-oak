@@ -675,7 +675,7 @@ export default function InteractiveDigitalMenu({ initialMenuItems }: Interactive
                                     {menuItem.subItems.map((subItem) => (
                                       <div
                                         key={subItem.id || subItem.name}
-                                        className={`flex justify-between items-baseline text-[clamp(calc(1.5rem*var(--zoom-factor)),calc(0.83vw*var(--zoom-factor)),calc(1.125rem*var(--zoom-factor)))]`}
+                                        className={`flex justify-between items-baseline text-[clamp(calc(0.75rem*var(--zoom-factor)),calc(0.83vw*var(--zoom-factor)),calc(1.125rem*var(--zoom-factor)))]`}
                                       >
                                         <span
                                           className={
