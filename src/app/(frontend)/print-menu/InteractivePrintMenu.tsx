@@ -414,8 +414,6 @@ export default function InteractivePrintMenu({
       groupedMenuItems[key].items.sort((a, b) => a.order - b.order)
     }
 
-    let currentCategoryOrder = Object.entries(groupedMenuItems)
-
     // Load layout from local storage
     const storedLayoutString = localStorage.getItem(PRINT_CATEGORY_LAYOUT_STORAGE_KEY)
     const newColumns: Array<Array<[string, GroupedItem]>> = Array.from(
