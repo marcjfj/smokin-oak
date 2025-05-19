@@ -65,7 +65,7 @@ const HeroBlock: React.FC<HeroBlockProps> = ({
             <Button
               key={cta.id || cta.label}
               asChild
-              className={`bg-yellow-400 hover:bg-yellow-500 shadow-none text-neutral-800 text-2xl font-bold !py-8 !px-8 rounded-none transition-all duration-150 ease-in-out`}
+              className={`bg-yellow-400 hover:bg-yellow-500 rounded-lg text-neutral-800 text-2xl font-bold !py-8 !px-8 transition-all duration-150 ease-in-out`}
             >
               <Link href={cta.url} className="flex items-center" prefetch={true}>
                 {cta.label}

@@ -129,7 +129,7 @@ export default async function SiteLayout(props: { children: React.ReactNode }) {
 
             {/* Right Section: Business Hours */}
             {businessHours && businessHours.schedule && businessHours.schedule.length > 0 && (
-              <div className="mt-6 md:mt-0 text-center md:text-right md:flex-1 flex flex-col items-end">
+              <div className="mt-6 md:mt-0 text-center md:text-right md:flex-1 flex flex-col md:items-end">
                 <h3 className={`text-lg font-semibold mb-2 ${goblinOne.className}`}>Hours</h3>
                 <ul className="text-sm space-y-1 w-full md:w-auto min-w-[200px] max-w-[400px]">
                   {businessHours.schedule.map(

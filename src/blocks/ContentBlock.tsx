@@ -17,25 +17,28 @@ const ContentBlock: React.FC<ContentBlockProps> = ({ title, content, backgroundI
     typeof backgroundImage === 'object' && backgroundImage?.url ? backgroundImage.url : null
 
   return (
-    <section
-      className="relative flex flex-col items-center justify-center text-center p-4 min-h-[70vh] bg-cover bg-center"
-      style={bgImageUrl ? { backgroundImage: `url(${bgImageUrl})` } : {}}
-    >
-      {bgImageUrl && <div className="absolute inset-0 bg-black opacity-50"></div>}
-      <div className="relative z-10 max-w-4xl">
+    <section className="relative flex flex-col items-center justify-center text-center p-4 mt-16 min-h-[70vh]">
+      <div className="relative z-10 max-w-4xl w-full">
         {title && (
-          <h2 className={`text-3xl font-bold mb-8 text-white text-pretty ${goblinOne.className}`}>
+          <h2
+            className={`text-3xl font-bold mb-8 text-neutral-q00 dark:text-white text-pretty ${goblinOne.className}`}
+          >
             {title}
           </h2>
-        )}{' '}
-        {/* Assuming white text for better contrast with bg/overlay */}
+        )}
+        {bgImageUrl && (
+          <div className="my-8 flex justify-center">
+            <img
+              src={bgImageUrl}
+              alt={title || 'Content image'}
+              className="max-w-full h-auto rounded-lg shadow-lg"
+              style={{ maxHeight: '50vh' }} // Constrain image height
+            />
+          </div>
+        )}
         {content && (
-          <RichText
-            data={content}
-            className="prose lg:prose-xl mx-auto text-white prose-strong:text-yellow-300"
-          />
-        )}{' '}
-        {/* Assuming white text */}
+          <RichText data={content} className="prose lg:prose-xl mx-auto text-neutral-100" />
+        )}
       </div>
     </section>
   )

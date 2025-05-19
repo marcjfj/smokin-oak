@@ -50,7 +50,7 @@ const ContactBlock: React.FC<ContactBlockProps> = async ({ image }) => {
 
   return (
     <>
-      <div className="relative flex flex-col">
+      <div className="relative flex flex-col mt-12">
         {imageUrl && (
           <div className="container mx-auto">
             <Image

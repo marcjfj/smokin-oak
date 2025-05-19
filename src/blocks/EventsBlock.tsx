@@ -64,7 +64,7 @@ const EventsBlock: React.FC<EventsBlockProps> = async ({ title }) => {
           return (
             <div
               key={event.id}
-              className="border rounded-lg shadow-lg bg-neutral-800 dark:bg-neutral-900 overflow-hidden flex flex-col"
+              className="border border-neutral-600 rounded-lg shadow-lg bg-neutral-800 dark:bg-neutral-900 overflow-hidden flex flex-col"
             >
               {imageUrl && event.image?.alt && (
                 <div className="relative w-full h-48">
