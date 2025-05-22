@@ -175,7 +175,7 @@ export interface Page {
   id: number;
   title: string;
   slug?: string | null;
-  layout?: (ContentBlock | HeroBlock | ContactBlock | EventsBlock | ImageBlock)[] | null;
+  layout?: (ContentBlock | HeroBlock | ContactBlock | EventsBlock | ImageBlock | ImageSliderBlock)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -269,6 +269,23 @@ export interface ImageBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'image';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ImageSliderBlock".
+ */
+export interface ImageSliderBlock {
+  title?: string | null;
+  images?:
+    | {
+        image: number | Media;
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'image-slider';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -488,6 +505,7 @@ export interface PagesSelect<T extends boolean = true> {
         contact?: T | ContactBlockSelect<T>;
         events?: T | EventsBlockSelect<T>;
         image?: T | ImageBlockSelect<T>;
+        'image-slider'?: T | ImageSliderBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -547,6 +565,22 @@ export interface EventsBlockSelect<T extends boolean = true> {
  */
 export interface ImageBlockSelect<T extends boolean = true> {
   image?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ImageSliderBlock_select".
+ */
+export interface ImageSliderBlockSelect<T extends boolean = true> {
+  title?: T;
+  images?:
+    | T
+    | {
+        image?: T;
+        caption?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }

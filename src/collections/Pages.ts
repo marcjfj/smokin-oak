@@ -144,6 +144,36 @@ const ImageBlock: Block = {
   ],
 }
 
+const ImageSliderBlock: Block = {
+  slug: 'image-slider',
+  interfaceName: 'ImageSliderBlock',
+  fields: [
+    {
+      name: 'title',
+      type: 'text',
+      label: 'Block Title',
+    },
+    {
+      name: 'images',
+      type: 'array',
+      label: 'Images',
+      minRows: 1,
+      fields: [
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+          required: true,
+        },
+        {
+          name: 'caption',
+          type: 'text',
+        },
+      ],
+    },
+  ],
+}
+
 export const Pages: CollectionConfig = {
   slug: 'pages',
   admin: {
@@ -175,7 +205,14 @@ export const Pages: CollectionConfig = {
       name: 'layout',
       type: 'blocks',
       minRows: 1,
-      blocks: [ContentBlock, HeroBlock, ContactBlockCMS, EventsBlockCMS, ImageBlock],
+      blocks: [
+        ContentBlock,
+        HeroBlock,
+        ContactBlockCMS,
+        EventsBlockCMS,
+        ImageBlock,
+        ImageSliderBlock,
+      ],
     },
   ],
 }

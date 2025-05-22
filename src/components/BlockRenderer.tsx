@@ -6,6 +6,7 @@ import HeroBlock from '../blocks/HeroBlock'
 import ContactBlock from '../blocks/ContactBlock' // Import the new ContactBlock
 import EventsBlock from '../blocks/EventsBlock' // Import the new EventsBlock
 import ImageBlock from '../blocks/ImageBlock' // Import the new ImageBlock
+import ImageSliderBlock from '../blocks/ImageSliderBlock' // Import the new ImageSliderBlock
 
 // Define a more specific type for our block
 interface BlockType {
@@ -55,6 +56,13 @@ interface AppImageBlock {
   image: any // Consider a more specific type if known, e.g., from payload-types
 }
 
+// Define a type for the new ImageSliderBlock
+interface AppImageSliderBlock {
+  blockType: 'image-slider'
+  title?: string | null
+  images?: Array<{ image: any; caption?: string | null; id?: string | null }> | null
+}
+
 // Define a component to render blocks
 const BlockRenderer = ({ block }: { block: BlockType }) => {
   switch (block.blockType) {
@@ -88,6 +96,9 @@ const BlockRenderer = ({ block }: { block: BlockType }) => {
     case 'image': // Add this case for ImageBlock
       const imageBlock = block as AppImageBlock
       return <ImageBlock image={imageBlock.image} />
+    case 'image-slider': // Add this case for ImageSliderBlock
+      const imageSliderBlock = block as AppImageSliderBlock
+      return <ImageSliderBlock title={imageSliderBlock.title} images={imageSliderBlock.images} />
     default:
       return null
   }
@@ -101,4 +112,5 @@ export type {
   AppContactBlock,
   AppEventsBlock,
   AppImageBlock,
+  AppImageSliderBlock,
 }
