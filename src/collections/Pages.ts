@@ -174,6 +174,26 @@ const ImageSliderBlock: Block = {
   ],
 }
 
+const HeaderBlock: Block = {
+  slug: 'header',
+  interfaceName: 'HeaderBlock',
+  fields: [
+    {
+      name: 'title',
+      type: 'text',
+      required: true,
+      label: 'Title',
+    },
+    {
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
+      required: true,
+      label: 'Background Image (short and wide)',
+    },
+  ],
+}
+
 export const Pages: CollectionConfig = {
   slug: 'pages',
   admin: {
@@ -212,6 +232,7 @@ export const Pages: CollectionConfig = {
         EventsBlockCMS,
         ImageBlock,
         ImageSliderBlock,
+        HeaderBlock,
       ],
     },
   ],

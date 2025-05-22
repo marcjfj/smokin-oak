@@ -7,6 +7,7 @@ import ContactBlock from '../blocks/ContactBlock' // Import the new ContactBlock
 import EventsBlock from '../blocks/EventsBlock' // Import the new EventsBlock
 import ImageBlock from '../blocks/ImageBlock' // Import the new ImageBlock
 import ImageSliderBlock from '../blocks/ImageSliderBlock' // Import the new ImageSliderBlock
+import HeaderBlockComponent from '../blocks/HeaderBlock' // Import the new HeaderBlock component
 
 // Define a more specific type for our block
 interface BlockType {
@@ -63,6 +64,13 @@ interface AppImageSliderBlock {
   images?: Array<{ image: any; caption?: string | null; id?: string | null }> | null
 }
 
+// Define a type for the new HeaderBlock
+interface AppHeaderBlock {
+  blockType: 'header'
+  title: string
+  image: any // Consider a more specific type, e.g., from payload-types
+}
+
 // Define a component to render blocks
 const BlockRenderer = ({ block }: { block: BlockType }) => {
   switch (block.blockType) {
@@ -99,6 +107,9 @@ const BlockRenderer = ({ block }: { block: BlockType }) => {
     case 'image-slider': // Add this case for ImageSliderBlock
       const imageSliderBlock = block as AppImageSliderBlock
       return <ImageSliderBlock title={imageSliderBlock.title} images={imageSliderBlock.images} />
+    case 'header': // Add this case for HeaderBlock
+      const headerBlock = block as AppHeaderBlock
+      return <HeaderBlockComponent title={headerBlock.title} image={headerBlock.image} />
     default:
       return null
   }
@@ -113,4 +124,5 @@ export type {
   AppEventsBlock,
   AppImageBlock,
   AppImageSliderBlock,
+  AppHeaderBlock, // Export the new HeaderBlock type
 }

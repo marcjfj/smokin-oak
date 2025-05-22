@@ -25,7 +25,7 @@ export function SiteHeader() {
             alt="Smokin Oak Logo"
             width={200}
             height={200}
-            className="rounded-full w-24 h-24 -mb-10 md:w-28 md:h-28 md:-mb-10"
+            className="rounded-full bg-neutral-800 w-24 h-24 -mb-10 md:w-28 md:h-28 md:-mb-10"
           />
         </Link>
         {/* Desktop Navigation */}
