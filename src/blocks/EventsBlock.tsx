@@ -47,7 +47,7 @@ const EventsBlock: React.FC<EventsBlockProps> = async ({ title }) => {
   }
 
   return (
-    <div className="container mx-auto py-12 px-4">
+    <div className="container mx-auto py-8 px-4">
       {title && (
         <h2
           className={`text-4xl font-bold text-center mb-12 ${goblinOne.className} text-neutral-800 dark:text-neutral-100`}

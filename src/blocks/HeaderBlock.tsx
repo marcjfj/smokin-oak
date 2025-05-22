@@ -12,7 +12,10 @@ interface HeaderBlockProps {
 
 const HeaderBlock: React.FC<HeaderBlockProps> = ({ title, image }) => {
   return (
-    <div style={{ position: 'relative', width: '100%', height: '400px' }}>
+    <div
+      style={{ position: 'relative', width: '100%', height: '400px' }}
+      className="border-y border-neutral-600"
+    >
       {image && image.url && (
         <Image
           src={image.url}
