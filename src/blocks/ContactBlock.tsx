@@ -60,11 +60,12 @@ const ContactBlock: React.FC<ContactBlockProps> = async ({ image }) => {
               width={1200} // Example width, adjust as needed
               height={400} // Example height, adjust for desired aspect ratio or make dynamic
               objectFit="cover"
-              className="aspect-video rounded-lg"
+              priority
+              className="aspect-video md:rounded-lg"
             />
           </div>
         )}
-        <div className="container-fluid relative bg-neutral-800 mx-auto py-12 px-4 -mt-20 md:-mt-100 border rounded-lg border-neutral-600">
+        <div className="container-fluid relative bg-neutral-800/80 backdrop-blur-sm mx-auto py-12 px-4 -mt-20 md:-mt-100 border rounded-lg border-neutral-600">
           <h1 className={`text-4xl font-bold text-center mb-12 ${goblinOne.className}`}>
             Contact Us
           </h1>
