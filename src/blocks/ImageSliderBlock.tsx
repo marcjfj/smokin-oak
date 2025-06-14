@@ -62,7 +62,7 @@ const ImageSliderBlock: React.FC<ImageSliderBlockProps> = ({ title, images }) =>
                   </div>
                 )}
                 {item.caption && (
-                  <p className=" w-full text-sm p-4 px-6 bg-yellow-500 text-black font-bold">
+                  <p className="w-full text-sm p-4 px-6 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold">
                     {item.caption}
                   </p>
                 )}

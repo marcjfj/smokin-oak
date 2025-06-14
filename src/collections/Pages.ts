@@ -198,9 +198,32 @@ export const Pages: CollectionConfig = {
   slug: 'pages',
   admin: {
     useAsTitle: 'title',
+    livePreview: {
+      url: '/',
+    },
   },
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [
+      async ({ doc }) => {
+        // Trigger revalidation for the specific page and home page
+        const paths = [`/${doc.slug}`, '/']
+        for (const path of paths) {
+          try {
+            await fetch(
+              `${process.env.NEXT_PUBLIC_SERVER_URL}/api/revalidate?path=${path}&token=${process.env.REVALIDATE_TOKEN}`,
+              {
+                method: 'POST',
+              },
+            )
+          } catch (error) {
+            console.error(`Error revalidating ${path}:`, error)
+          }
+        }
+      },
+    ],
   },
   fields: [
     {
