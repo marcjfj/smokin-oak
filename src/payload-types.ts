@@ -349,6 +349,10 @@ export interface MenuItem {
    * Check this box if the item is currently sold out.
    */
   isSoldOut?: boolean | null;
+  /**
+   * Uncheck this box to hide the item from all menus.
+   */
+  isPublished?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -627,6 +631,7 @@ export interface MenuItemsSelect<T extends boolean = true> {
   image?: T;
   category?: T;
   isSoldOut?: T;
+  isPublished?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -76,6 +76,11 @@ async function getMenuItems(): Promise<MenuItem[]> {
       depth: 2,
       limit: 200,
       sort: 'order',
+      where: {
+        isPublished: {
+          equals: true,
+        },
+      },
     })
 
     const processedItems = result.docs

@@ -119,6 +119,15 @@ export const MenuItems: CollectionConfig = {
         description: 'Check this box if the item is currently sold out.',
       },
     },
+    {
+      name: 'isPublished',
+      label: 'Published',
+      type: 'checkbox',
+      defaultValue: true,
+      admin: {
+        description: 'Uncheck this box to hide the item from all menus.',
+      },
+    },
     // You could add more fields here, like dietary restrictions (tags), calories, etc.
   ],
 }
