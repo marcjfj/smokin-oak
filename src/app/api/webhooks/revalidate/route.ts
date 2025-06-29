@@ -29,6 +29,7 @@ export async function POST(req: NextRequest) {
     const paths = [
       '/', // Home page
       '/menu', // Menu page
+      '/digital-menu', // Digital menu page
       '/print-menu', // Print menu page
       '/events', // Events page
       '/about', // About page
