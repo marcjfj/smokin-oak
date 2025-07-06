@@ -14,15 +14,24 @@ export const MenuItems: CollectionConfig = {
   },
   hooks: {
     afterChange: [
-      async ({ doc }) => {
+      async () => {
         // Trigger revalidation for menu-related pages
         const paths = ['/menu', '/print-menu', '/digital-menu']
+        
+        // Only revalidate if we have the required environment variables
+        if (!process.env.NEXT_PUBLIC_SERVER_URL || !process.env.REVALIDATE_TOKEN) {
+          return
+        }
+        
         for (const path of paths) {
           try {
             await fetch(
               `${process.env.NEXT_PUBLIC_SERVER_URL}/api/revalidate?path=${path}&token=${process.env.REVALIDATE_TOKEN}`,
               {
                 method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
               },
             )
           } catch (error) {

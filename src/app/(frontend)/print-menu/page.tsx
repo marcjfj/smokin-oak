@@ -193,7 +193,5 @@ export default async function PrintMenuPage() {
   )
 }
 
-// Optional: For dynamic pages or specific revalidation strategies
-// export const revalidate = 3600; // Revalidate every hour
-// Remove old printStyles and renderRichTextForPrint function as they are no longer needed.
-// The old rendering logic (JSX directly in this component) is also removed.
+// Disable caching to ensure unpublished items are filtered properly
+export const revalidate = 0

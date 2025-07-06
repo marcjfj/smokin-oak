@@ -127,5 +127,5 @@ export default async function DigitalMenuPage() {
   return <InteractiveDigitalMenu initialMenuItems={menuItems} />
 }
 
-// Optional: For dynamic pages or specific revalidation strategies
-// export const revalidate = 3600; // Revalidate every hour
+// Disable caching to ensure unpublished items are filtered properly
+export const revalidate = 0
