@@ -795,8 +795,7 @@ export default function InteractivePrintMenu({
                                   </p>
                                 </div>
                                 {menuItem.description && (
-                                  <div className="prose max-w-none text-sm screen-text-sm print:text-xs text-neutral-700 no-print">
-                                    {' '}
+                                  <div className="prose max-w-none text-sm screen-text-sm print:text-xs text-neutral-700 [&_p]:my-1! print:[&_p]:my-0!">
                                     <RichText data={menuItem.description} />
                                   </div>
                                 )}
@@ -947,12 +946,12 @@ export default function InteractivePrintMenu({
                     >
                       <section className="print-menu-category">
                         <h2
-                          className={`font-semibold text-neutral-800 mb-2 ${goblinOne.className} text-lg screen-text-lg print:text-base`}
+                          className={`font-semibold text-neutral-800 ${goblinOne.className} text-lg screen-text-lg print:text-base`}
                         >
                           {group.categoryDetails.name}
                         </h2>
                         {group.categoryDetails.description && (
-                          <p className="text-neutral-600 mb-3 italic text-base screen-text-base print:text-sm">
+                          <p className="text-neutral-600italic text-base screen-text-base print:text-sm">
                             {group.categoryDetails.description}
                           </p>
                         )}
@@ -982,8 +981,7 @@ export default function InteractivePrintMenu({
                                 </p>
                               </div>
                               {menuItem.description && (
-                                <div className="prose max-w-none text-sm screen-text-sm print:text-xs text-neutral-700 no-print">
-                                  {' '}
+                                <div className="prose max-w-none text-sm screen-text-sm print:text-xs text-neutral-700 [&_p]:my-1! print:[&_p]:my-0!">
                                   <RichText data={menuItem.description} />
                                 </div>
                               )}
