@@ -19,7 +19,7 @@ import FloatingPrintButton from './FloatingPrintButton' // Added import
 const PRINT_CATEGORY_LAYOUT_STORAGE_KEY = 'printMenuCategoryLayout'
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || ''
 const NUM_COLUMNS = 5 // Expanded to 5 columns (3 front, 2 back content)
-const MAX_PANEL_CONTENT_HEIGHT_PX = 1600 // Max content height in pixels for a panel, increased for buffer
+// Removed MAX_PANEL_CONTENT_HEIGHT_PX - now calculated dynamically in overflow detection
 
 // Define the structure of a populated image (from the 'media' collection)
 interface PopulatedImage extends Omit<Media, 'id'> {
@@ -101,10 +101,9 @@ const DraggableCategory: React.FC<DraggableCategoryProps> = ({
   const ref = useRef<HTMLDivElement>(null)
   const [{ handlerId }, drop] = useDrop<
     {
-      categoryKey: string // Changed from id to categoryKey to match item type
+      categoryKey: string
       originalColumnIndex: number
       originalItemIndexInColumn: number
-      // type: string // type is implicitly ItemTypes.CATEGORY
     },
     void,
     { handlerId: Identifier | null }
@@ -116,14 +115,13 @@ const DraggableCategory: React.FC<DraggableCategoryProps> = ({
       }
     },
     hover(item, monitor) {
-      // item: { categoryKey: string, originalColumnIndex: number, originalItemIndexInColumn: number }
       if (!ref.current) {
         return
       }
       const dragColumnIndex = item.originalColumnIndex
       const dragItemIndexInColumn = item.originalItemIndexInColumn
       const hoverColumnIndex = columnIndex
-      const hoverItemIndexInColumn = index // This is the index of the current item in its column
+      const hoverItemIndexInColumn = index
 
       // Don't replace items with themselves
       if (
@@ -138,11 +136,7 @@ const DraggableCategory: React.FC<DraggableCategoryProps> = ({
       const clientOffset = monitor.getClientOffset()
       const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top
 
-      // Only perform the move when the mouse has crossed half of the items height
-      // When dragging downwards, only move when the cursor is below 50%
-      // When dragging upwards, only move when the cursor is above 50%
-
-      // Dragging downwards over a different item
+      // Dragging downwards
       if (
         dragColumnIndex === hoverColumnIndex &&
         dragItemIndexInColumn < hoverItemIndexInColumn &&
@@ -151,7 +145,7 @@ const DraggableCategory: React.FC<DraggableCategoryProps> = ({
         return
       }
 
-      // Dragging upwards over a different item
+      // Dragging upwards
       if (
         dragColumnIndex === hoverColumnIndex &&
         dragItemIndexInColumn > hoverItemIndexInColumn &&
@@ -168,8 +162,6 @@ const DraggableCategory: React.FC<DraggableCategoryProps> = ({
         hoverItemIndexInColumn,
       )
 
-      // Note: we're mutating the monitor item here!
-      // This is generally not recommended, but it continuously updates the item's index as it's dragged.
       item.originalColumnIndex = hoverColumnIndex
       item.originalItemIndexInColumn = hoverItemIndexInColumn
     },
@@ -179,7 +171,7 @@ const DraggableCategory: React.FC<DraggableCategoryProps> = ({
     () => ({
       type: ItemTypes.CATEGORY,
       item: () => {
-        onDragStart() // Callback to set overall drag active state
+        onDragStart()
         return {
           categoryKey,
           originalColumnIndex: columnIndex,
@@ -187,13 +179,13 @@ const DraggableCategory: React.FC<DraggableCategoryProps> = ({
         }
       },
       end: (_item, monitor) => {
-        onDragEnd() // Callback to unset overall drag active state
+        onDragEnd()
       },
       collect: (monitor: any) => ({
         isDragging: monitor.isDragging(),
       }),
     }),
-    [categoryKey, columnIndex, index, onDragStart, onDragEnd, moveCategory], // Added dependencies
+    [categoryKey, columnIndex, index, onDragStart, onDragEnd, moveCategory],
   )
 
   const opacity = isDragging ? 0.4 : 1
@@ -208,10 +200,10 @@ const DraggableCategory: React.FC<DraggableCategoryProps> = ({
       data-handler-id={handlerId}
       className={`mb-4 p-4 border cursor-move no-print-border rounded break-inside-avoid-column ${
         isPotentialTarget
-          ? 'border-dashed border-neutral-400' // Style for potential drop target
-          : 'border-neutral-300' // Default border
+          ? 'border-dashed border-neutral-400'
+          : 'border-neutral-300'
       } ${
-        isDragging ? 'bg-neutral-200' : 'bg-white' // Slightly different bg when dragging
+        isDragging ? 'bg-neutral-200' : 'bg-white'
       }`}
     >
       {children}
@@ -250,7 +242,7 @@ const EmptyDropTarget: React.FC<EmptyDropTargetProps> = ({
         item.originalColumnIndex,
         item.originalItemIndexInColumn,
         columnIndex,
-        0, // Place at the beginning of the target column
+        0,
       )
     },
     collect: (monitor) => ({
@@ -267,7 +259,7 @@ const EmptyDropTarget: React.FC<EmptyDropTargetProps> = ({
       ref={emptyTargetRef}
       className={`w-full flex-grow h-full min-h-[6rem] p-4 border-2 rounded flex items-center justify-center transition-colors duration-150 ${
         isActiveDropZone && isOver
-          ? 'border-yellow-500 bg-neutral-200' // Adjusted colors for light theme
+          ? 'border-yellow-500 bg-neutral-200'
           : isActiveDropZone
             ? 'border-dashed border-neutral-400'
             : 'border-dashed border-neutral-300'
@@ -275,7 +267,7 @@ const EmptyDropTarget: React.FC<EmptyDropTargetProps> = ({
     >
       <p
         className={`text-sm ${
-          isActiveDropZone && isOver ? 'text-yellow-600' : 'text-neutral-500' // Adjusted colors
+          isActiveDropZone && isOver ? 'text-yellow-600' : 'text-neutral-500'
         }`}
       >
         {isActiveDropZone && isOver
@@ -345,7 +337,7 @@ const AdditionalDropTarget: React.FC<AdditionalDropTargetProps> = ({
       ref={dropRef}
       className={`w-full min-h-[6rem] p-4 mt-2 border-2 rounded flex items-center justify-center transition-colors duration-150 ${
         isActiveDropZone && isOver
-          ? 'border-yellow-500 bg-neutral-200' // Adjusted colors
+          ? 'border-yellow-500 bg-neutral-200'
           : isActiveDropZone
             ? 'border-dashed border-neutral-400'
             : 'border-dashed border-neutral-300 opacity-50'
@@ -353,7 +345,7 @@ const AdditionalDropTarget: React.FC<AdditionalDropTargetProps> = ({
     >
       <p
         className={`text-sm ${
-          isActiveDropZone && isOver ? 'text-yellow-600' : 'text-neutral-500' // Adjusted colors
+          isActiveDropZone && isOver ? 'text-yellow-600' : 'text-neutral-500'
         }`}
       >
         {label}
@@ -479,11 +471,16 @@ export default function InteractivePrintMenu({
       if (panelEl) {
         const currentColumnData = columns[index]
         if (currentColumnData && currentColumnData.length > 0) {
+          // Simple overflow check using current element height
+          // Letter landscape: ~216mm height with margins = ~1200px at typical screen DPI
+          // Be very generous to avoid false positives
+          const PRINT_PANEL_HEIGHT_PX = 1200
           const contentHeight = panelEl.scrollHeight
-          if (contentHeight > MAX_PANEL_CONTENT_HEIGHT_PX) {
+          
+          if (contentHeight > PRINT_PANEL_HEIGHT_PX) {
             newOverflowStates[index] = true
             console.log(
-              `Panel ${index} overflow check: scrollHeight (${contentHeight}px) > MAX_PANEL_CONTENT_HEIGHT_PX (${MAX_PANEL_CONTENT_HEIGHT_PX}px)`,
+              `Panel ${index} overflow detected: content height (${contentHeight}px) > print panel height (${PRINT_PANEL_HEIGHT_PX}px)`,
             )
           }
         }
@@ -664,6 +661,21 @@ export default function InteractivePrintMenu({
               display: none !important;
             }
 
+            /* Reduce vertical spacing between categories in print */
+            .no-print-border {
+              margin-bottom: 1mm !important;
+              padding: 2mm !important; /* Reduce padding too */
+            }
+            
+            /* Target all category containers */
+            .print-panel-trifold > * {
+              margin-bottom: 1mm !important;
+            }
+            
+            .print-panel-trifold > *:last-child {
+              margin-bottom: 0 !important;
+            }
+            
             /* Ensure content within panels respects boundaries */
             .print-menu-category section,
             .print-menu-category {
