@@ -4,7 +4,7 @@ import config from '@/payload.config'
 import { Event, Media } from '@/payload-types' // Import Media type
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
-import Image from 'next/image' // Import Next.js Image component
+import Image from "next/legacy/image" // Import Next.js Image component
 import { goblinOne } from '@/lib/fonts' // Import goblinOne
 
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || ''

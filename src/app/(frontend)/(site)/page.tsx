@@ -1,5 +1,5 @@
 import { headers as getHeaders } from 'next/headers.js'
-import Image from 'next/image'
+import Image from "next/legacy/image"
 import { getPayload } from 'payload'
 import React from 'react'
 

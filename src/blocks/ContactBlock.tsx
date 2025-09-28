@@ -8,7 +8,7 @@ import type {
   SocialMedia as SocialMediaType,
   Media, // Assuming Media type is available for the image
 } from '@/payload-types' // Assuming this is the correct path to your generated types
-import Image from 'next/image' // Import Next.js Image component
+import Image from "next/legacy/image" // Import Next.js Image component
 
 interface ContactBlockProps {
   image?: Media | string // Allow for ID or full Media object for the image

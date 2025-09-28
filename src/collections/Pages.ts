@@ -8,14 +8,14 @@ const formatSlug: FieldHook = async ({ value, data }) => {
     return value
       .replace(/ /g, '-')
       .replace(/[^ء-ي٠-٩a-zA-Z0-9-]/g, '') // Allow Arabic characters and numbers
-      .toLowerCase()
+      .toLowerCase();
   }
   if (data?.title) {
     // If no slug, generate from title
     return data.title
       .replace(/ /g, '-')
       .replace(/[^ء-ي٠-٩a-zA-Z0-9-]/g, '')
-      .toLowerCase()
+      .toLowerCase();
   }
   return value // Fallback
 }

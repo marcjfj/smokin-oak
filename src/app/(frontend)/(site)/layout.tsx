@@ -8,7 +8,7 @@ import type {
   Status as StatusType,
   ContactInfo as ContactInfoType,
 } from '@/payload-types'
-import Image from 'next/image'
+import Image from "next/legacy/image"
 
 export default async function SiteLayout(props: { children: React.ReactNode }) {
   const { children } = props

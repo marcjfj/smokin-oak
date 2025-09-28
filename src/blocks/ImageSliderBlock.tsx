@@ -4,7 +4,7 @@ import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, A11y } from 'swiper/modules'
 import 'swiper/css'
-import Image from 'next/image' // Assuming Next.js Image component
+import Image from "next/legacy/image" // Assuming Next.js Image component
 import { goblinOne } from '@/lib/fonts' // Import goblinOne
 
 interface ImageSliderBlockProps {

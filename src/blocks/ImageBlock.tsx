@@ -1,6 +1,6 @@
 import React from 'react'
 import { Media } from '@/payload-types' // Assuming Media type is available
-import Image from 'next/image'
+import Image from "next/legacy/image"
 
 interface ImageBlockProps {
   image: Media | string // Allow for ID or full Media object
