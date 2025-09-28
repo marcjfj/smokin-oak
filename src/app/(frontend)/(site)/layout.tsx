@@ -8,7 +8,7 @@ import type {
   Status as StatusType,
   ContactInfo as ContactInfoType,
 } from '@/payload-types'
-import Image from "next/legacy/image"
+import Image from 'next/legacy/image'
 
 export default async function SiteLayout(props: { children: React.ReactNode }) {
   const { children } = props
@@ -106,6 +106,7 @@ export default async function SiteLayout(props: { children: React.ReactNode }) {
                 alt="Smokin' Oak BBQ Logo"
                 width={150}
                 height={75}
+                objectFit="contain"
                 className="mb-4"
               />
               {socialLinks && socialLinks.links && socialLinks.links.length > 0 && (

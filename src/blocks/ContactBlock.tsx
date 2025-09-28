@@ -8,7 +8,7 @@ import type {
   SocialMedia as SocialMediaType,
   Media, // Assuming Media type is available for the image
 } from '@/payload-types' // Assuming this is the correct path to your generated types
-import Image from "next/legacy/image" // Import Next.js Image component
+import Image from 'next/legacy/image' // Import Next.js Image component
 
 interface ContactBlockProps {
   image?: Media | string // Allow for ID or full Media object for the image
@@ -58,7 +58,7 @@ const ContactBlock: React.FC<ContactBlockProps> = async ({ image }) => {
               alt={altText}
               layout="responsive"
               width={1200} // Example width, adjust as needed
-              height={400} // Example height, adjust for desired aspect ratio or make dynamic
+              height={800} // Example height, adjust for desired aspect ratio or make dynamic
               objectFit="cover"
               priority
               className="aspect-video md:rounded-lg"
@@ -118,7 +118,7 @@ const ContactBlock: React.FC<ContactBlockProps> = async ({ image }) => {
                 </h2>
                 <ul className="space-y-1">
                   {businessHours.schedule.map((item, index) => (
-                    <li key={index} className="flex justify-between">
+                    <li key={index} className="flex justify-between gap-2">
                       <span className="capitalize font-medium">{item.day}</span>
                       <span>{item.timeRange}</span>
                     </li>

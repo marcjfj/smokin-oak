@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import Image from "next/legacy/image"
+import Image from 'next/legacy/image'
 import { Menu } from 'lucide-react'
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import { useState } from 'react'
@@ -18,13 +18,14 @@ export function SiteHeader() {
       <nav className="container mx-auto flex items-center md:justify-between relative">
         <Link
           href="/"
-          className="flex items-center space-x-2 text-2xl font-bold md:static absolute left-1/2 md:left-0 transform md:transform-none -translate-x-1/2 md:-translate-x-0"
+          className="pt-4 md:pt-0 flex items-center space-x-2 text-2xl font-bold md:static absolute left-1/2 md:left-0 transform md:transform-none -translate-x-1/2 md:-translate-x-0"
         >
           <Image
             src="/smokin-oak-logo-light.png"
             alt="Smokin Oak Logo"
-            width={200}
-            height={200}
+            width={100}
+            height={100}
+            objectFit="contain"
             className="rounded-full bg-neutral-800 w-24 h-24 -mb-10 md:w-28 md:h-28 md:-mb-10"
           />
         </Link>
