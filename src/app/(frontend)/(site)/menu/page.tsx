@@ -1,5 +1,4 @@
 import React from 'react'
-import Image from "next/legacy/image"
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import type {
@@ -11,7 +10,6 @@ import { RichText } from '@payloadcms/richtext-lexical/react'
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import { goblinOne } from '@/lib/fonts'
 
-const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || ''
 
 // Define the structure of a populated image (from the 'media' collection)
 interface PopulatedImage extends Omit<Media, 'id'> {

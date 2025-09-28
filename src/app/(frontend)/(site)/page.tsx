@@ -1,17 +1,13 @@
-import { headers as getHeaders } from 'next/headers.js'
-import Image from "next/legacy/image"
 import { getPayload } from 'payload'
 import React from 'react'
 
 import config from '@/payload.config'
-import { Page, ContentBlock as ContentBlockPayload } from '@/payload-types' // Correctly import ContentBlock
+import { Page } from '@/payload-types'
 import BlockRenderer, { AppContentBlock } from '@/components/BlockRenderer' // Import the new component and type
 
 export default async function HomePage() {
-  const headers = await getHeaders()
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
-  const { user } = await payload.auth({ headers })
 
   const pageResult = await payload.find({
     collection: 'pages',

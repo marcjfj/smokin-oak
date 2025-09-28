@@ -3,7 +3,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react'
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import type { Media } from '@/payload-types'
 import { goblinOne } from '@/lib/fonts'
-import Image from "next/legacy/image"
+import Image from 'next/legacy/image'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { ArrowRight, Utensils, MapPin } from 'lucide-react'
@@ -83,7 +83,8 @@ const HeroBlock: React.FC<HeroBlockProps> = ({
       <Image
         src={imageUrl}
         alt={title || 'Hero image'}
-        fill
+        layout="fill"
+        objectFit="contain"
         className="object-contain drop-shadow-md"
         sizes="(max-width: 768px) 100vw, 50vw"
         priority

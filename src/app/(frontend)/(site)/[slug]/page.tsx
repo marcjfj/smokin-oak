@@ -1,12 +1,10 @@
-import { headers as getHeaders } from 'next/headers.js'
-import Image from "next/legacy/image"
 import { getPayload } from 'payload'
 import React from 'react'
 import { notFound } from 'next/navigation' // Import notFound
 import type { Metadata, ResolvingMetadata } from 'next'
 
 import config from '@/payload.config'
-import { Page, ContentBlock as ContentBlockPayload } from '@/payload-types' // Correctly import ContentBlock
+import { Page } from '@/payload-types'
 import BlockRenderer, { AppContentBlock } from '@/components/BlockRenderer' // Import the new component and type
 
 // Define props type to include params with slug
@@ -25,7 +23,6 @@ type Props = {
 
 export async function generateMetadata(
   { params }: Props,
-  parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const { slug } = await params
   const payloadConfig = await config
@@ -65,10 +62,8 @@ export async function generateMetadata(
 export default async function SlugPage({ params }: SlugPageProps) {
   // Updated function signature
   const { slug } = await params // Destructure slug from params (no await needed here)
-  const headers = await getHeaders()
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
-  // const { user } = await payload.auth({ headers }) // User auth might not be needed for all slug pages, or handle as per requirements
 
   const pageResult = await payload.find({
     collection: 'pages',
