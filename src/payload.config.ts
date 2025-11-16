@@ -11,6 +11,8 @@ import { Pages } from './collections/Pages'
 import { MenuItems } from './collections/MenuItems'
 import Categories from './collections/Categories'
 import { Events } from './collections/Events'
+import { CateringMenu } from './collections/CateringMenu'
+import CateringCategories from './collections/CateringCategories'
 import { SocialMedia } from './globals/SocialMedia'
 import { Hours } from './globals/Hours'
 import { Status } from './globals/Status'
@@ -26,7 +28,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Pages, MenuItems, Categories, Events],
+  collections: [Users, Media, Pages, MenuItems, Categories, Events, CateringMenu, CateringCategories],
   globals: [SocialMedia, Hours, Status, ContactInfo],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

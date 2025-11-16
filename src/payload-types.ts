@@ -73,6 +73,8 @@ export interface Config {
     'menu-items': MenuItem;
     categories: Category;
     events: Event;
+    'catering-menu': CateringMenu;
+    'catering-categories': CateringCategory;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -85,6 +87,8 @@ export interface Config {
     'menu-items': MenuItemsSelect<false> | MenuItemsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
+    'catering-menu': CateringMenuSelect<false> | CateringMenuSelect<true>;
+    'catering-categories': CateringCategoriesSelect<false> | CateringCategoriesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -403,6 +407,82 @@ export interface Event {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "catering-menu".
+ */
+export interface CateringMenu {
+  id: number;
+  /**
+   * Enter a number to define the sort order. Lower numbers appear first.
+   */
+  order: number;
+  name: string;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Enter price in cents (e.g., 1000 for $10.00). Optional if item has sub-items with prices.
+   */
+  price?: number | null;
+  /**
+   * Add different serving sizes or quantities with their respective prices for catering orders.
+   */
+  subItems?:
+    | {
+        /**
+         * E.g., "Half Pan", "Full Pan", "Serves 10-12", "Serves 20-25"
+         */
+        name: string;
+        /**
+         * Enter price in cents (e.g., 5000 for $50.00)
+         */
+        price: number;
+        id?: string | null;
+      }[]
+    | null;
+  image?: (number | null) | Media;
+  category: number | CateringCategory;
+  /**
+   * Uncheck this box to hide the item from the catering menu.
+   */
+  isPublished?: boolean | null;
+  /**
+   * Optional minimum order requirements (e.g., "48 hours notice required")
+   */
+  minimumOrder?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Categories for the catering menu
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "catering-categories".
+ */
+export interface CateringCategory {
+  id: number;
+  name: string;
+  description?: string | null;
+  /**
+   * Used to control the display order of categories
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -431,6 +511,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'events';
         value: number | Event;
+      } | null)
+    | ({
+        relationTo: 'catering-menu';
+        value: number | CateringMenu;
+      } | null)
+    | ({
+        relationTo: 'catering-categories';
+        value: number | CateringCategory;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -656,6 +744,40 @@ export interface EventsSelect<T extends boolean = true> {
   description?: T;
   location?: T;
   image?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "catering-menu_select".
+ */
+export interface CateringMenuSelect<T extends boolean = true> {
+  order?: T;
+  name?: T;
+  description?: T;
+  price?: T;
+  subItems?:
+    | T
+    | {
+        name?: T;
+        price?: T;
+        id?: T;
+      };
+  image?: T;
+  category?: T;
+  isPublished?: T;
+  minimumOrder?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "catering-categories_select".
+ */
+export interface CateringCategoriesSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  order?: T;
   updatedAt?: T;
   createdAt?: T;
 }
