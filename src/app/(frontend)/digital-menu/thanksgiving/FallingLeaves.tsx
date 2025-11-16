@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useMemo } from 'react'
+import React, { useMemo, useEffect, useState } from 'react'
 import Image from 'next/image'
 
 interface Leaf {
@@ -14,6 +14,17 @@ interface Leaf {
 }
 
 export default function FallingLeaves() {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   const leaves = useMemo(() => {
     const leafImages = [
       '/leaves/leaf1.png',
@@ -23,17 +34,20 @@ export default function FallingLeaves() {
       '/leaves/leaf5.png',
     ]
 
-    // Generate 15 random leaves
-    return Array.from({ length: 15 }, (_, i) => ({
+    // Generate fewer leaves on mobile (8) vs desktop (15)
+    const leafCount = isMobile ? 8 : 15
+    const sizeRange = isMobile ? { min: 30, max: 50 } : { min: 40, max: 100 }
+
+    return Array.from({ length: leafCount }, (_, i) => ({
       id: i,
       image: leafImages[Math.floor(Math.random() * leafImages.length)],
       left: Math.random() * 100, // Random horizontal position (0-100%)
-      size: 40 + Math.random() * 60, // Random size between 40-100px
+      size: sizeRange.min + Math.random() * (sizeRange.max - sizeRange.min), // Random size
       duration: 8 + Math.random() * 10, // Fall duration 8-18 seconds
       delay: Math.random() * 5, // Start delay 0-5 seconds
       rotation: Math.random() * 360, // Initial rotation
     }))
-  }, [])
+  }, [isMobile])
 
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
@@ -56,7 +70,7 @@ export default function FallingLeaves() {
             alt="Falling leaf"
             width={leaf.size}
             height={leaf.size}
-            className="object-contain opacity-40 animate-sway"
+            className="object-contain opacity-30 md:opacity-40 animate-sway"
             style={{
               animationDuration: `${2 + Math.random() * 2}s`,
             }}
