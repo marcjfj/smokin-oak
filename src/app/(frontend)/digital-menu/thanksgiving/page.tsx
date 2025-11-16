@@ -2,12 +2,14 @@ import React from 'react'
 import { goblinOne } from '@/lib/fonts'
 import { Check, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
+import FallingLeaves from './FallingLeaves'
 
 export default function ThanksgivingMenuPage() {
   return (
-    <div className="h-screen overflow-hidden bg-stone-300 text-stone-900 p-[2vh] flex flex-col">
+    <div className="h-screen overflow-hidden bg-amber-100 text-stone-900 p-[2vh] flex flex-col relative">
+      <FallingLeaves />
       {/* Header */}
-      <header className="text-center mb-[2vh]">
+      <header className="text-center mb-[2vh] relative z-10">
         <h1
           className={`text-[8vh] font-bold tracking-tight text-amber-900 leading-none ${goblinOne.className}`}
         >
@@ -16,8 +18,10 @@ export default function ThanksgivingMenuPage() {
       </header>
 
       {/* Platters Include - Full Width */}
-      <div className="bg-amber-800 rounded-lg p-[3vh] mb-[2vh] text-amber-50">
-        <h2 className={`text-[5vh] font-bold mb-[2vh] text-center ${goblinOne.className}`}>
+      <div className="bg-amber-900 rounded-lg p-[3vh] mb-[2vh] text-amber-50 relative z-10">
+        <h2
+          className={`text-[5vh] font-bold mb-[2vh] text-center text-amber-100 ${goblinOne.className}`}
+        >
           Platters Include
         </h2>
         <div className="flex justify-evenly items-start text-[2.5vh] leading-tight">
@@ -41,24 +45,24 @@ export default function ThanksgivingMenuPage() {
       </div>
 
       {/* Main Content Grid */}
-      <div className="flex-1 grid grid-cols-2 gap-[2vh] overflow-hidden">
+      <div className="flex-1 grid grid-cols-2 gap-[2vh] overflow-hidden relative z-10">
         {/* Left Column */}
         <div className="flex flex-col gap-[2vh]">
           {/* Proteins */}
           <div className="flex-1 p-[2vh]">
             <h3
-              className={`text-[3.5vh] font-bold mb-[1.5vh] text-amber-900 ${goblinOne.className}`}
+              className={`text-[3.8vh] font-bold mb-[1.5vh] text-amber-900 ${goblinOne.className}`}
             >
               Protein Choices
             </h3>
-            <ul className="space-y-[1vh] text-[2.2vh]">
+            <ul className="space-y-[1vh] text-[2.8vh]">
               <li className="flex items-center gap-2">
                 <ChevronRight className="text-amber-700 flex-shrink-0" size="1em" strokeWidth={3} />
-                <span>Giant Smoked Turkey Leg</span>
+                <span className="font-bold">Giant Smoked Turkey Leg</span>
               </li>
               <li className="flex items-center gap-2">
                 <ChevronRight className="text-amber-700 flex-shrink-0" size="1em" strokeWidth={3} />
-                <span>½ Pound of Sliced Smoked Turkey Breast</span>
+                <span className="font-bold">½ Pound of Sliced Smoked Turkey Breast</span>
               </li>
             </ul>
           </div>
@@ -66,22 +70,22 @@ export default function ThanksgivingMenuPage() {
           {/* Sides */}
           <div className="flex-1 p-[2vh]">
             <h3
-              className={`text-[3.5vh] font-bold mb-[1.5vh] text-amber-900 ${goblinOne.className}`}
+              className={`text-[3.8vh] font-bold mb-[1.5vh] text-amber-900 ${goblinOne.className}`}
             >
               Side Choices
             </h3>
-            <ul className="space-y-[1vh] text-[2.2vh]">
+            <ul className="space-y-[1vh] text-[2.8vh]">
               <li className="flex items-center gap-2">
                 <ChevronRight className="text-amber-700 flex-shrink-0" size="1em" strokeWidth={3} />
-                <span>Garlic Mashed Potatoes with Smoked Turkey Gravy</span>
+                <span className="font-bold">Garlic Mashed Potatoes with Smoked Turkey Gravy</span>
               </li>
               <li className="flex items-center gap-2">
                 <ChevronRight className="text-amber-700 flex-shrink-0" size="1em" strokeWidth={3} />
-                <span>Smoked Sourdough Stuffing</span>
+                <span className="font-bold">Smoked Sourdough Stuffing</span>
               </li>
               <li className="flex items-center gap-2">
                 <ChevronRight className="text-amber-700 flex-shrink-0" size="1em" strokeWidth={3} />
-                <span>Southern Green Beans</span>
+                <span className="font-bold">Southern Green Beans</span>
               </li>
             </ul>
           </div>
@@ -92,22 +96,24 @@ export default function ThanksgivingMenuPage() {
           {/* Desserts */}
           <div className="flex-1 p-[2vh]">
             <h3
-              className={`text-[3.5vh] font-bold mb-[1.5vh] text-amber-900 ${goblinOne.className}`}
+              className={`text-[3.8vh] font-bold mb-[1.5vh] text-amber-900 ${goblinOne.className}`}
             >
               Dessert Options
             </h3>
-            <ul className="space-y-[1vh] text-[2.2vh]">
+            <ul className="space-y-[1vh] text-[2.8vh]">
               <li className="flex items-center gap-2">
                 <ChevronRight className="text-amber-700 flex-shrink-0" size="1em" strokeWidth={3} />
-                <span>Pumpkin Cheesecake</span>
+                <span className="font-bold">Pumpkin Cheesecake</span>
               </li>
               <li className="flex items-center gap-2">
                 <ChevronRight className="text-amber-700 flex-shrink-0" size="1em" strokeWidth={3} />
-                <span>Caramel Apple Spice Cake with Smoked Candied Pecans</span>
+                <span className="font-bold">
+                  Caramel Apple Spice Cake with Smoked Candied Pecans
+                </span>
               </li>
               <li className="flex items-center gap-2">
                 <ChevronRight className="text-amber-700 flex-shrink-0" size="1em" strokeWidth={3} />
-                <span>Cranberry Curd Almond Crust Tart</span>
+                <span className="font-bold">Cranberry Curd Almond Crust Tart</span>
               </li>
             </ul>
           </div>
@@ -119,11 +125,11 @@ export default function ThanksgivingMenuPage() {
             </div>
             <div className="flex-1">
               <h3
-                className={`text-[3.5vh] font-bold mb-[1.5vh] text-amber-900 ${goblinOne.className}`}
+                className={`text-[3.8vh] font-bold mb-[1.5vh] text-amber-900 ${goblinOne.className}`}
               >
                 Whole Smoked Turkey
               </h3>
-              <p className="text-[2.2vh] leading-relaxed">
+              <p className="text-[2.2vh] leading-relaxed font-bold">
                 Limited amount of whole smoked spatchcocked turkeys available for pre-order. Fresh,
                 all-natural Diestel Turkey from Sonora, weighing 10-12 lbs each.
               </p>
