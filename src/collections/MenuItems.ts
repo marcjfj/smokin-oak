@@ -16,7 +16,7 @@ export const MenuItems: CollectionConfig = {
     afterChange: [
       async () => {
         // Trigger revalidation for menu-related pages
-        const paths = ['/menu', '/print-menu', '/digital-menu']
+        const paths = ['/menu', '/print-menu', '/digital-menu', '/one-page-menu']
         
         // Only revalidate if we have the required environment variables
         if (!process.env.NEXT_PUBLIC_SERVER_URL || !process.env.REVALIDATE_TOKEN) {

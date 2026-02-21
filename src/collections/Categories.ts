@@ -16,7 +16,7 @@ const Categories: CollectionConfig = {
     afterChange: [
       async ({ doc }) => {
         // Trigger revalidation for menu-related pages
-        const paths = ['/menu', '/print-menu', '/digital-menu']
+        const paths = ['/menu', '/print-menu', '/digital-menu', '/one-page-menu']
         for (const path of paths) {
           try {
             await fetch(
